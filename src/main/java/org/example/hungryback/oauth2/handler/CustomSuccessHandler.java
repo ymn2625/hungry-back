@@ -39,6 +39,7 @@ public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
         }
         else {
             response.sendRedirect("http://localhost:3000/");
+            // dmdkfjkdjksl
         }
 
     }
