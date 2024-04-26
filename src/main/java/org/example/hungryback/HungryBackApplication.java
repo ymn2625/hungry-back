@@ -6,8 +6,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class HungryBackApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(HungryBackApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(HungryBackApplication.class, args);
+    }
 
 }
