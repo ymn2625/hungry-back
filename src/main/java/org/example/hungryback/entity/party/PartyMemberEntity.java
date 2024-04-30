@@ -12,7 +12,7 @@ import org.example.hungryback.entity.UserEntity;
 public class PartyMemberEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int partyMemberId;
+    private Long partyMemberId;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "partyId")

@@ -15,11 +15,11 @@ public class PartyEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int partyId;
+    private Long partyId;
     @Column(unique = true)
     private String partyName;
     @Column(unique = true)
-    private int partyLimit;
+    private Long partyLimit;
     private String partyDesc;
 
     @OneToMany(mappedBy = "partyEntity",cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
