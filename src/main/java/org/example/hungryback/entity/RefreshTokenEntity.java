@@ -12,12 +12,16 @@ import java.io.Serializable;
 @RedisHash(value = "RefreshToken", timeToLive = 60)
 public class RefreshTokenEntity {
     @Id
-    private String userEmail;
     private String refreshToken;
+    private String userEmail;
 
     @Builder
     public RefreshTokenEntity(String refreshToken, String userEmail) {
         this.refreshToken = refreshToken;
         this.userEmail = userEmail;
+    }
+
+    public void patchEntity(String refreshToken) {
+        this.refreshToken = refreshToken;
     }
 }

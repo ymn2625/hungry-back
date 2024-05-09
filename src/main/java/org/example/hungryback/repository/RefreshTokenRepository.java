@@ -7,4 +7,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface RefreshTokenRepository extends CrudRepository<RefreshTokenEntity, String> {
     RefreshTokenEntity findByUserEmail(String userEmail);
+    RefreshTokenEntity findByRefreshToken(String refreshToken);
 }

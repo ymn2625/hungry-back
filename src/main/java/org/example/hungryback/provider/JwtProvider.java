@@ -60,7 +60,7 @@ public class JwtProvider {
     }
 
     public void refreshTokenCookie(HttpServletResponse response, String refreshToken) {
-        response.addCookie(createCookie("refresh", refreshToken));
+        response.addCookie(createCookie("refreshToken", refreshToken));
     }
 
     public Cookie createCookie(String key, String value) {
@@ -84,7 +84,7 @@ public class JwtProvider {
         }
     }
 
-    // userId 얻기
+    // userEmail 얻기
     public String getUserEmail(String jwt) {
         Key key = generateSecretKey();
 

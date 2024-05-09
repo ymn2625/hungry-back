@@ -12,6 +12,7 @@ public interface ResponseMessage {
 
     String SIGN_IN_FAIL = "Login information mismatch.";
     String CERTIFICATION_FAIL = "Certification failed.";
+    String REISSUE_FAIL = "JWT reissue failed";
 
     String MESSAGE_FAIL = "Message send failed.";
     String DATABASE_ERROR = "Database error.";
