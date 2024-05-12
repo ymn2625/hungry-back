@@ -1,4 +1,4 @@
-package org.example.hungryback.dto.response.user;
+package org.example.hungryback.dto.response.auth;
 
 import lombok.Getter;
 import org.example.hungryback.common.ResponseCode;
@@ -12,14 +12,15 @@ public class SignInResponseDto extends ResponseDto {
     private String token;
     private int expirationTime;
 
-    private SignInResponseDto(String token) {
+    private SignInResponseDto(String token, int expirationTime) {
         super();
         this.token = token;
-        this.expirationTime = 3600000;
+        // refresh 토큰 자동 재발급 체크하려고 짧게 설정해놓음
+        this.expirationTime = expirationTime / 1000;
     }
 
-    public static ResponseEntity<SignInResponseDto> success(String token) {
-        SignInResponseDto responseBody = new SignInResponseDto(token);
+    public static ResponseEntity<SignInResponseDto> success(String token, int expirationTime) {
+        SignInResponseDto responseBody = new SignInResponseDto(token, expirationTime);
         return ResponseEntity.status(HttpStatus.OK).body(responseBody);
     }
 

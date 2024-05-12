@@ -1,4 +1,4 @@
-package org.example.hungryback.dto.response.user;
+package org.example.hungryback.dto.response.auth;
 
 import lombok.Getter;
 import org.example.hungryback.common.ResponseCode;
@@ -19,7 +19,7 @@ public class SignUpResponseDto extends ResponseDto {
     }
 
     public static ResponseEntity<ResponseDto> duplicateEmail() {
-        ResponseDto responseBody = new ResponseDto(ResponseCode.DUPLICATE_ID, ResponseMessage.DUPLICATE_ID);
+        ResponseDto responseBody = new ResponseDto(ResponseCode.DUPLICATE_EMAIL, ResponseMessage.DUPLICATE_EMAIL);
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseBody);
     }
 
@@ -28,8 +28,4 @@ public class SignUpResponseDto extends ResponseDto {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseBody);
     }
 
-    public static ResponseEntity<ResponseDto> notExistUser() {
-        ResponseDto responseBody = new ResponseDto(ResponseCode.NOT_EIXST_USER, ResponseMessage.NOT_EXIST_USER);
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(responseBody);
-    }
 }

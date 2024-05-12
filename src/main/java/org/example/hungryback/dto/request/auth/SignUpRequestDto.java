@@ -1,4 +1,4 @@
-package org.example.hungryback.dto.request.user;
+package org.example.hungryback.dto.request.auth;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -10,14 +10,14 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class SignUpAppRequestDto {
+public class SignUpRequestDto {
 
     @Email
     @NotBlank
     private String userEmail;
 
     @NotBlank
-    @Pattern(regexp="^(?=.*[a-zA-Z])(?=.*[0-9])[a-zA-Z0-9]{8,13}$")
+    @Pattern(regexp="^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,13}$")
     private String userPassword;
 
     @NotBlank
@@ -31,5 +31,8 @@ public class SignUpAppRequestDto {
 
     @NotBlank
     private String userNickname;
+
+    @NotBlank
+    private String userType;
 
 }

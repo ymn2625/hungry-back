@@ -1,4 +1,4 @@
-package org.example.hungryback.dto.response.user;
+package org.example.hungryback.dto.response.account;
 
 import lombok.Getter;
 import org.example.hungryback.common.ResponseCode;
@@ -8,14 +8,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 @Getter
-public class PatchPasswordResponseDto extends ResponseDto {
-
-    private PatchPasswordResponseDto () {
+public class PatchNicknameResponseDto extends ResponseDto {
+    private PatchNicknameResponseDto() {
         super();
     }
 
-    public static ResponseEntity<PatchPasswordResponseDto> success() {
-        PatchPasswordResponseDto responseBody = new PatchPasswordResponseDto();
+    public static ResponseEntity<PatchNicknameResponseDto> success() {
+        PatchNicknameResponseDto responseBody = new PatchNicknameResponseDto();
         return ResponseEntity.status(HttpStatus.OK).body(responseBody);
     }
 

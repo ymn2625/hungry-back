@@ -1,6 +1,7 @@
 package org.example.hungryback.entity;
 
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.oauth2.core.user.OAuth2User;
@@ -11,7 +12,9 @@ import java.util.Map;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CustomOAuth2User implements OAuth2User {
-    private String userId;
+    private String userEmail;
+    @Getter
+    private String userType;
 
     @Override
     public Map<String, Object> getAttributes() {
@@ -25,6 +28,7 @@ public class CustomOAuth2User implements OAuth2User {
 
     @Override
     public String getName() {
-        return this.userId;
+        return this.userEmail;
     }
+
 }

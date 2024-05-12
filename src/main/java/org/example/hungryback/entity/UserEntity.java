@@ -2,8 +2,7 @@ package org.example.hungryback.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.example.hungryback.dto.request.user.SignUpAppRequestDto;
-import org.example.hungryback.dto.request.user.SignUpSocialRequestDto;
+import org.example.hungryback.dto.request.auth.SignUpRequestDto;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -25,23 +24,15 @@ public class UserEntity {
     private String userRole;
 
     @Builder
-    public UserEntity(SignUpAppRequestDto dto) {
+    public UserEntity(SignUpRequestDto dto) {
         this.userEmail = dto.getUserEmail();
         this.userPassword = dto.getUserPassword();
-        this.userType = "App";
+        this.userType = dto.getUserType();
         this.userName = dto.getUserName();
         this.userTel = dto.getUserTel();
         this.userProfileImg = dto.getUserProfileImg();
         this.userNickname = dto.getUserNickname();
-        this.userRole = "USER";
-    }
-
-    public void signUpUser(SignUpSocialRequestDto dto) {
-        this.userName = dto.getUserName();
-        this.userTel = dto.getUserTel();
-        this.userProfileImg = dto.getUserProfileImg();
-        this.userNickname = dto.getUserNickname();
-        this.userRole = "USER";
+        this.userRole = "ROLE_USER";
     }
 
     public void patchPassword(String encodedPassword) {

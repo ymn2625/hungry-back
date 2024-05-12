@@ -1,4 +1,4 @@
-package org.example.hungryback.dto.response.certification;
+package org.example.hungryback.dto.response.auth;
 
 import lombok.Getter;
 import org.example.hungryback.common.ResponseCode;
