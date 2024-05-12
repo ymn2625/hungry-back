@@ -25,16 +25,19 @@ public class OAuth2UserServiceImplement extends DefaultOAuth2UserService {
 
         UserEntity userEntity = null;
         String userEmail = null;
+        String type = null;
 
         if(oauthClientName.equals("kakao")) {
             Map<String, String> responseMap = (Map<String, String>) oAuth2User.getAttributes().get("kakao_account");
             userEmail = responseMap.get("email");
+            type = "kakao";
         }
         if(oauthClientName.equals("naver")) {
             Map<String, String> responseMap = (Map<String, String>) oAuth2User.getAttributes().get("response");
             userEmail = responseMap.get("email");
+            type = "naver";
         }
 
-        return new CustomOAuth2User(userEmail);
+        return new CustomOAuth2User(userEmail, type);
     }
 }

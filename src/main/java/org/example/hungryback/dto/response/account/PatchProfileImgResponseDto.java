@@ -1,4 +1,4 @@
-package org.example.hungryback.dto.response.user;
+package org.example.hungryback.dto.response.account;
 
 import lombok.Getter;
 import org.example.hungryback.common.ResponseCode;

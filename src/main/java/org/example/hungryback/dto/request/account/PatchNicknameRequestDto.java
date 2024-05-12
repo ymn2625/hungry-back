@@ -1,4 +1,4 @@
-package org.example.hungryback.dto.request.user;
+package org.example.hungryback.dto.request.account;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;

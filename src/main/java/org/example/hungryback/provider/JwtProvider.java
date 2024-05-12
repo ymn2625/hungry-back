@@ -66,7 +66,7 @@ public class JwtProvider {
     public Cookie createCookie(String key, String value) {
 
         Cookie cookie = new Cookie(key, value);
-        cookie.setMaxAge(24*60*60);
+        cookie.setMaxAge(refreshTokenExpiredMs/1000);
         cookie.setHttpOnly(true);
         cookie.setPath("/");
 

@@ -8,12 +8,15 @@ import org.example.hungryback.entity.RefreshTokenEntity;
 import org.example.hungryback.provider.JwtProvider;
 import org.example.hungryback.repository.RefreshTokenRepository;
 import org.example.hungryback.service.JwtService;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
 public class JwtServiceImplement implements JwtService {
+    @Value("${jwt-access-expiration-time}")
+    private int tokenExpiredMs;
     private final RefreshTokenRepository refreshTokenRepository;
     private final JwtProvider jwtProvider;
 
@@ -42,6 +45,6 @@ public class JwtServiceImplement implements JwtService {
             return ResponseDto.databaseError();
         }
 
-        return JwtResponseDto.success(token);
+        return JwtResponseDto.success(token, tokenExpiredMs);
     }
 }

@@ -6,7 +6,7 @@ public interface ResponseMessage {
     String EXPIRED_TOKEN = "Expired token.";
 
     String VALIDATION_FAIL = "Validation failed.";
-    String DUPLICATE_ID = "Duplicate id.";
+    String DUPLICATE_EMAIL = "Duplicate email.";
     String DUPLICATE_TEL = "Duplicate tel.";
     String NOT_EXIST_USER = "Not exist user";
 

@@ -27,17 +27,18 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws ServletException, IOException {
         CustomOAuth2User oAuth2User = (CustomOAuth2User) authentication.getPrincipal();
         String userEmail = oAuth2User.getName();
+        String userType = oAuth2User.getUserType();
 
-        if(userRepository.findByUserEmail(userEmail) == null) {
-            response.sendRedirect("http://localhost:3000/account/sign-up-oauth/" + userEmail);
-        } else {
+        if(userRepository.findByUserEmail(userEmail) == null) { // 회원가입
+            response.sendRedirect("http://localhost:3000/auth/sign-up-oauth/" + userEmail + "/" + userType);
+        } else {    // 로그인
             String token = jwtProvider.createToken(userEmail);
             String refreshToken = jwtProvider.createRefreshToken(userEmail);
             RefreshTokenEntity refreshTokenEntity = new RefreshTokenEntity(refreshToken, userEmail);
             refreshTokenRepository.save(refreshTokenEntity);
             jwtProvider.refreshTokenCookie(response, refreshToken);
 
-            response.sendRedirect("http://localhost:3000/account/oauth-response/" + token + "/360000");
+            response.sendRedirect("http://localhost:3000/auth/oauth-response/" + token + "/360000");
         }
     }
 }

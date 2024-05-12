@@ -4,7 +4,7 @@ public interface ResponseCode {
     String SUCCESS = "SU";
 
     String VALIDATION_FAIL = "VF";
-    String DUPLICATE_ID = "DI";
+    String DUPLICATE_EMAIL = "DE";
     String DUPLICATE_TEL = "DT";
     String NOT_EIXST_USER = "NU";
 

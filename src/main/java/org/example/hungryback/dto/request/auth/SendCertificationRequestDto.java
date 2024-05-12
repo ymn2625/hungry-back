@@ -1,4 +1,4 @@
-package org.example.hungryback.dto.request.certification;
+package org.example.hungryback.dto.request.auth;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;

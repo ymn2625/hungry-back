@@ -12,14 +12,15 @@ public class JwtResponseDto extends ResponseDto {
     private String token;
     private int expirationTime;
 
-    private JwtResponseDto(String token) {
+    private JwtResponseDto(String token, int expirationTime) {
         super();
         this.token = token;
-        this.expirationTime = 3600000;
+        // refresh 토큰 자동 재발급 체크하려고 짧게 설정해놓음
+        this.expirationTime = expirationTime / 1000;
     }
 
-    public static ResponseEntity<JwtResponseDto> success(String token) {
-        JwtResponseDto responseBody = new JwtResponseDto(token);
+    public static ResponseEntity<JwtResponseDto> success(String token, int expirationTime) {
+        JwtResponseDto responseBody = new JwtResponseDto(token, expirationTime);
         return ResponseEntity.status(HttpStatus.OK).body(responseBody);
     }
 
