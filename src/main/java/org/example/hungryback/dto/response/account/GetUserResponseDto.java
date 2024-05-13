@@ -10,7 +10,6 @@ import org.springframework.http.ResponseEntity;
 
 @Getter
 public class GetUserResponseDto extends ResponseDto {
-    private int userId;
     private String userEmail;
     private String userType;
     private String userName;
@@ -20,7 +19,6 @@ public class GetUserResponseDto extends ResponseDto {
 
     private GetUserResponseDto(UserEntity userEntity) {
         super();
-        this.userId = userEntity.getUserId();
         this.userEmail = userEntity.getUserEmail();
         this.userType = userEntity.getUserType();
         this.userName = userEntity.getUserName();
