@@ -7,6 +7,7 @@ public interface ResponseCode {
     String DUPLICATE_EMAIL = "DE";
     String DUPLICATE_TEL = "DT";
     String NOT_EIXST_USER = "NU";
+    String NOT_EIXST_STORE = "NS";
 
     String SIGN_IN_FAIL = "SF";
     String CERTIFICATION_FAIL = "CF";
