@@ -46,7 +46,7 @@ public class WebSecurityConfig {
                 )
 
                 .authorizeHttpRequests(request -> request
-                        .requestMatchers("/api/v1/auth/**", "/oauth2/**", "/api/v1/jwt/**").permitAll()
+                        .requestMatchers("/api/v1/auth/**", "/oauth2/**", "/api/v1/jwt/**", "/file/**").permitAll()
                         .requestMatchers("/api/v1/user/**").hasRole("USER")
                         .requestMatchers("/api/v1/search/**").hasRole("USER")
 
@@ -79,7 +79,7 @@ public class WebSecurityConfig {
         corsConfiguration.setAllowCredentials(true);
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/api/v1/**", corsConfiguration);
+        source.registerCorsConfiguration("/**", corsConfiguration);
 
         return source;
     }
