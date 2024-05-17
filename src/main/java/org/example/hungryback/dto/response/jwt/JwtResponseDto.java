@@ -16,7 +16,7 @@ public class JwtResponseDto extends ResponseDto {
         super();
         this.token = token;
         // refresh 토큰 자동 재발급 체크하려고 짧게 설정해놓음
-        this.expirationTime = expirationTime / 1000;
+        this.expirationTime = expirationTime / 3000;
     }
 
     public static ResponseEntity<JwtResponseDto> success(String token, int expirationTime) {
