@@ -160,4 +160,18 @@ public class AuthServiceImplement implements AuthService {
         }
         return CheckCertificationResponseDto.success(userEmail);
     }
+
+    @Override
+    public ResponseEntity<? super FindAccountResponseDto> findAccount(FindAccountRequestDto dto) {
+        UserEntity userEntity = null;
+        try {
+            String userEmail = dto.getUserEmail();
+            userEntity = userRepository.findByUserEmail(userEmail);
+            if(userEntity == null) return FindAccountResponseDto.notExistUser();
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            return ResponseDto.databaseError();
+        }
+        return FindAccountResponseDto.success(userEntity);
+    }
 }
