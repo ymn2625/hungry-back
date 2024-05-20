@@ -5,10 +5,8 @@ import org.example.hungryback.dto.ResponseDto;
 import org.example.hungryback.dto.request.account.PatchNicknameRequestDto;
 import org.example.hungryback.dto.request.account.PatchPasswordRequestDto;
 import org.example.hungryback.dto.request.account.PatchProfileImgRequestDto;
-import org.example.hungryback.dto.response.account.GetUserResponseDto;
-import org.example.hungryback.dto.response.account.PatchNicknameResponseDto;
-import org.example.hungryback.dto.response.account.PatchPasswordResponseDto;
-import org.example.hungryback.dto.response.account.PatchProfileImgResponseDto;
+import org.example.hungryback.dto.request.account.PatchTelRequestDto;
+import org.example.hungryback.dto.response.account.*;
 import org.example.hungryback.entity.UserEntity;
 import org.example.hungryback.repository.UserRepository;
 import org.example.hungryback.service.AccountService;
@@ -89,6 +87,27 @@ public class AccountServiceImplement implements AccountService {
             return ResponseDto.databaseError();
         }
         return PatchPasswordResponseDto.success();
+    }
+
+    @Override
+    public ResponseEntity<? super PatchTelResponseDto> patchTel(PatchTelRequestDto dto) {
+        try {
+
+            String userEmail = dto.getUserEmail();
+            String userTel = dto.getUserTel();
+
+            UserEntity userEntity = userRepository.findByUserEmail(userEmail);
+            if(userEntity == null) return PatchTelResponseDto.notExistUser();
+
+            userEntity.patchTel(userTel);
+
+            userRepository.save(userEntity);
+
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            return ResponseDto.databaseError();
+        }
+        return PatchTelResponseDto.success();
     }
 
     @Override

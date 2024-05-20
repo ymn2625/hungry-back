@@ -5,10 +5,8 @@ import lombok.RequiredArgsConstructor;
 import org.example.hungryback.dto.request.account.PatchNicknameRequestDto;
 import org.example.hungryback.dto.request.account.PatchPasswordRequestDto;
 import org.example.hungryback.dto.request.account.PatchProfileImgRequestDto;
-import org.example.hungryback.dto.response.account.GetUserResponseDto;
-import org.example.hungryback.dto.response.account.PatchNicknameResponseDto;
-import org.example.hungryback.dto.response.account.PatchPasswordResponseDto;
-import org.example.hungryback.dto.response.account.PatchProfileImgResponseDto;
+import org.example.hungryback.dto.request.account.PatchTelRequestDto;
+import org.example.hungryback.dto.response.account.*;
 import org.example.hungryback.service.AccountService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -35,6 +33,12 @@ public class AccountController {
     @PatchMapping("/nickname")
     public ResponseEntity<? super PatchNicknameResponseDto> patchNickname(@RequestBody @Valid PatchNicknameRequestDto requestBody) {
         ResponseEntity<? super PatchNicknameResponseDto> response = accountService.patchNickname(requestBody);
+        return response;
+    }
+
+    @PatchMapping("/tel")
+    public ResponseEntity<? super PatchTelResponseDto> patchNickname(@RequestBody @Valid PatchTelRequestDto requestBody) {
+        ResponseEntity<? super PatchTelResponseDto> response = accountService.patchTel(requestBody);
         return response;
     }
 
