@@ -1,12 +1,17 @@
 package org.example.hungryback.controller;
 
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.example.hungryback.dto.request.account.PatchNicknameRequestDto;
 import org.example.hungryback.dto.request.account.PatchPasswordRequestDto;
 import org.example.hungryback.dto.request.account.PatchProfileImgRequestDto;
 import org.example.hungryback.dto.request.account.PatchTelRequestDto;
+import org.example.hungryback.dto.request.account.ResignationRequestDto;
+import org.example.hungryback.dto.request.account.SignOutRequestDto;
 import org.example.hungryback.dto.response.account.*;
+import org.example.hungryback.dto.response.account.ResignationResponseDto;
+import org.example.hungryback.dto.response.account.SignOutResponseDto;
 import org.example.hungryback.service.AccountService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -45,6 +50,18 @@ public class AccountController {
     @GetMapping("/user")
     public ResponseEntity<? super GetUserResponseDto> getUser(@AuthenticationPrincipal String userEmail) {
         ResponseEntity<? super GetUserResponseDto> response = accountService.getUser(userEmail);
+        return response;
+    }
+
+    @PostMapping("/resignation")
+    public ResponseEntity<? super ResignationResponseDto> resignation(@RequestBody @Valid ResignationRequestDto requestBody, HttpServletResponse servletResponse) {
+        ResponseEntity<? super ResignationResponseDto> response = accountService.resignation(requestBody, servletResponse);
+        return response;
+    }
+
+    @PostMapping("/sign-out")
+    public ResponseEntity<? super SignOutResponseDto> signOut(@RequestBody @Valid SignOutRequestDto requestBody, HttpServletResponse servletResponse) {
+        ResponseEntity<? super SignOutResponseDto> response = accountService.signOut(requestBody, servletResponse);
         return response;
     }
 

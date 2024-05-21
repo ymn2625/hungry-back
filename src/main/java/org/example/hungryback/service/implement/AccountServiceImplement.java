@@ -1,13 +1,14 @@
 package org.example.hungryback.service.implement;
 
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.example.hungryback.dto.ResponseDto;
-import org.example.hungryback.dto.request.account.PatchNicknameRequestDto;
-import org.example.hungryback.dto.request.account.PatchPasswordRequestDto;
-import org.example.hungryback.dto.request.account.PatchProfileImgRequestDto;
-import org.example.hungryback.dto.request.account.PatchTelRequestDto;
+import org.example.hungryback.dto.request.account.*;
 import org.example.hungryback.dto.response.account.*;
+import org.example.hungryback.entity.RefreshTokenEntity;
 import org.example.hungryback.entity.UserEntity;
+import org.example.hungryback.repository.RefreshTokenRepository;
 import org.example.hungryback.repository.UserRepository;
 import org.example.hungryback.service.AccountService;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +21,7 @@ import org.springframework.stereotype.Service;
 public class AccountServiceImplement implements AccountService {
 
     private final UserRepository userRepository;
+    private final RefreshTokenRepository refreshTokenRepository;
 
     private PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
@@ -126,4 +128,55 @@ public class AccountServiceImplement implements AccountService {
         }
         return GetUserResponseDto.success(userEntity);
     }
+
+    // 로그아웃
+    @Override
+    public ResponseEntity<? super SignOutResponseDto> signOut(SignOutRequestDto dto, HttpServletResponse response) {
+        try {
+            String userEmail = dto.getUserEmail();
+
+            RefreshTokenEntity refreshTokenEntity = refreshTokenRepository.findByUserEmail(userEmail);
+            if(refreshTokenEntity != null) {
+                refreshTokenRepository.delete(refreshTokenEntity);
+            }
+
+            Cookie cookie = new Cookie("refreshToken", null);
+            cookie.setMaxAge(0);
+            cookie.setPath("/");
+            response.addCookie(cookie);
+
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            return ResponseDto.databaseError();
+        }
+        return SignOutResponseDto.success();
+    }
+
+    // 회원탈퇴
+    @Override
+    public ResponseEntity<? super ResignationResponseDto> resignation(ResignationRequestDto dto, HttpServletResponse response) {
+        try {
+            String userEmail = dto.getUserEmail();
+
+            UserEntity userEntity = userRepository.findByUserEmail(userEmail);
+            if(userEntity == null) return ResignationResponseDto.notExistUser();
+
+            userRepository.delete(userEntity);
+
+            RefreshTokenEntity refreshTokenEntity = refreshTokenRepository.findByUserEmail(userEmail);
+            if(refreshTokenEntity != null) {
+                refreshTokenRepository.delete(refreshTokenEntity);
+            }
+
+            Cookie cookie = new Cookie("refreshToken", null);
+            cookie.setMaxAge(0);
+            cookie.setPath("/");
+            response.addCookie(cookie);
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            return ResponseDto.databaseError();
+        }
+        return ResignationResponseDto.success();
+    }
+
 }
