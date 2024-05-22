@@ -3,14 +3,15 @@ package org.example.hungryback.controller;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.example.hungryback.dto.request.account.PatchPasswordRequestDto;
 import org.example.hungryback.dto.request.auth.*;
+import org.example.hungryback.dto.response.account.PatchPasswordResponseDto;
 import org.example.hungryback.dto.response.auth.*;
+import org.example.hungryback.service.AccountService;
 import org.example.hungryback.service.AuthService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v1/auth")
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthController {
 
     private final AuthService authService;
+    private final AccountService accountService;
 
     @PostMapping("/sign-up")
     public ResponseEntity<? super SignUpResponseDto> signUpApp(@RequestBody @Valid SignUpRequestDto requestBody) {
@@ -46,6 +48,18 @@ public class AuthController {
     @PostMapping("/check-certification")
     public ResponseEntity<? super CheckCertificationResponseDto> signIn(@RequestBody @Valid CheckCertificationRequestDto requestBody) {
         ResponseEntity<? super CheckCertificationResponseDto> response = authService.checkCertification(requestBody);
+        return response;
+    }
+
+    @PostMapping("/find-account")
+    public ResponseEntity<? super FindAccountResponseDto> findAccount(@RequestBody @Valid FindAccountRequestDto requestBody) {
+        ResponseEntity<? super FindAccountResponseDto> response = authService.findAccount(requestBody);
+        return response;
+    }
+
+    @PatchMapping("/password")
+    public ResponseEntity<? super PatchPasswordResponseDto> patchPassword(@RequestBody @Valid PatchPasswordRequestDto requestBody) {
+        ResponseEntity<? super PatchPasswordResponseDto> response = accountService.patchPassword(requestBody);
         return response;
     }
 

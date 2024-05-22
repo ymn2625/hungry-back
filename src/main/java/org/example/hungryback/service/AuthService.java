@@ -11,4 +11,5 @@ public interface AuthService {
     ResponseEntity<? super CheckEmailResponseDto> checkEmail (CheckEmailRequestDto dto);
     ResponseEntity<? super SendCertificationResponseDto> sendCertification(SendCertificationRequestDto dto);
     ResponseEntity<? super CheckCertificationResponseDto> checkCertification(CheckCertificationRequestDto dto);
+    ResponseEntity<? super FindAccountResponseDto> findAccount(FindAccountRequestDto dto);
 }

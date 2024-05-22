@@ -46,5 +46,8 @@ public class UserEntity {
     public void patchNickname(String userNickname) {
         this.userNickname = userNickname;
     }
+    public void patchTel(String userTel) {
+        this.userTel = userTel;
+    }
 
 }

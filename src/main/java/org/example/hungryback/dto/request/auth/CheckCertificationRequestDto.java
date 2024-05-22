@@ -10,6 +10,9 @@ import lombok.Setter;
 public class CheckCertificationRequestDto {
 
     @NotBlank
+    private String userName;
+
+    @NotBlank
     @Pattern(regexp="^(01[016789]{1})[0-9]{7,8}$")
     private String userTel;
 
