@@ -140,6 +140,7 @@ public class AuthServiceImplement implements AuthService {
 
         try {
 
+            String userName = dto.getUserName();
             String userTel = dto.getUserTel();
             String certificationNumber = dto.getCertificationNumber();
 
@@ -150,12 +151,27 @@ public class AuthServiceImplement implements AuthService {
             certificationRepository.delete(certificationEntity);
 
             UserEntity userEntity = userRepository.findByUserTel(userTel);
-            if(userEntity != null ) userEmail = userEntity.getUserEmail();
+            // 이름까지 확인하도록 수정
+            if(userEntity != null && userEntity.getUserName().equals(userName)) userEmail = userEntity.getUserEmail();
 
         } catch (Exception exception) {
             exception.printStackTrace();
             return ResponseDto.databaseError();
         }
         return CheckCertificationResponseDto.success(userEmail);
+    }
+
+    @Override
+    public ResponseEntity<? super FindAccountResponseDto> findAccount(FindAccountRequestDto dto) {
+        UserEntity userEntity = null;
+        try {
+            String userEmail = dto.getUserEmail();
+            userEntity = userRepository.findByUserEmail(userEmail);
+            if(userEntity == null) return FindAccountResponseDto.notExistUser();
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            return ResponseDto.databaseError();
+        }
+        return FindAccountResponseDto.success(userEntity);
     }
 }

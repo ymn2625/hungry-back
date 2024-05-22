@@ -2,8 +2,11 @@ use hungry;
 
 select * from user;
 delete from user;
+update user set user_tel='01012341111' where user_id = 26;
 
+select * from store;
 
+INSERT INTO store VALUES(null, 'address', 'description', 'latotude', 'longtitude', 'name', 'tel');
 
 SELECT *
 FROM store
