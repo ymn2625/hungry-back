@@ -24,7 +24,6 @@ public class SearchController {
     @PostMapping("/searchList")
     public ResponseEntity<List<SearchResponseDto>> searchList(@RequestBody @Valid SearchRequestDto requestBody) {
         List<SearchResponseDto> response = searchService.searchList(requestBody);
-        System.out.println(response.size()+"왔냐구");
         // response가 비어있지 않은지 확인
         if (!response.isEmpty()) {
             // 첫 번째 요소의 storeName 출력
@@ -36,6 +35,11 @@ public class SearchController {
         return ResponseEntity.ok(response);
     }
 
+    @PostMapping("/storeResult")
+    public ResponseEntity<SearchResponseDto> storeResult(@RequestBody @Valid SearchRequestDto requestBody) {
+        SearchResponseDto response = searchService.storeResult(requestBody);
+        return ResponseEntity.ok(response);
+    }
 
 }
 

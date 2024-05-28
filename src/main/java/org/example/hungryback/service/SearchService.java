@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface SearchService {
     List<SearchResponseDto> searchList(SearchRequestDto dto);
+    SearchResponseDto storeResult(SearchRequestDto dto);
 }
