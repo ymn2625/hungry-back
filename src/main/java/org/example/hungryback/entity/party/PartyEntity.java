@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -21,6 +22,8 @@ public class PartyEntity {
     @Column(unique = true)
     private Long partyLimit;
     private String partyDesc;
+    private Date partyStartDate;
+    private Date partyEndDate;
 
     @OneToMany(mappedBy = "partyEntity",cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<PartyMemberEntity> partyMemberEntityList = new ArrayList<>();
