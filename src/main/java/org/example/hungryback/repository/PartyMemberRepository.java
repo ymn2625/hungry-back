@@ -8,5 +8,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface PartyMemberRepository extends JpaRepository<PartyMemberEntity, PartyMemberPk> {
     PartyMemberEntity findByUserEmailAndPartyId(String userEmail, Integer partyId);
-
+    PartyMemberEntity findByPartyIdAndMemberRole(Integer partyId, Integer memberRole);
 }

@@ -3,9 +3,11 @@ package org.example.hungryback.controller;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.example.hungryback.dto.request.party.PostPartyRequestDto;
+import org.example.hungryback.dto.request.partyMember.PatchMemberRoleRequestDto;
 import org.example.hungryback.dto.request.partyMember.PostPartyMemberRequestDto;
 import org.example.hungryback.dto.response.message.GetMessagesResponseDto;
 import org.example.hungryback.dto.response.party.GetPartiesResponseDto;
+import org.example.hungryback.dto.response.party.PatchMemberRoleResponseDto;
 import org.example.hungryback.dto.response.party.PostPartyResponseDto;
 import org.example.hungryback.dto.response.partyMember.DeletePartyMemberResponseDto;
 import org.example.hungryback.dto.response.partyMember.PostPartyMemberResponseDto;
@@ -57,6 +59,12 @@ public class PartyController {
     @DeleteMapping("/{userEmail}/parties/{partyId}")
     public ResponseEntity<? super DeletePartyMemberResponseDto> deletePartyMember(@PathVariable("userEmail") String userEmail, @AuthenticationPrincipal String email, @PathVariable Integer partyId) {
         ResponseEntity<? super DeletePartyMemberResponseDto> response = partyMemberService.deletePartyMember(userEmail, email, partyId);
+        return response;
+    }
+
+    @PatchMapping("/{userEmail}/parties/party-member")
+    public ResponseEntity<? super PatchMemberRoleResponseDto> patchMemberRole(@RequestBody @Valid PatchMemberRoleRequestDto requestBody, @AuthenticationPrincipal String email) {
+        ResponseEntity<? super PatchMemberRoleResponseDto> response = partyMemberService.patchMemberRole(requestBody, email);
         return response;
     }
 }

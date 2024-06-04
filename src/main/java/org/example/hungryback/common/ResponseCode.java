@@ -12,6 +12,8 @@ public interface ResponseCode {
     String NOT_EXIST_PARTY = "NP";
     String NOT_EXIST_PARTY_MEMBER = "NPM";
 
+    String PARTY_LEADER = "PL";
+
     String SIGN_IN_FAIL = "SF";
     String CERTIFICATION_FAIL = "CF";
     String REISSUE_FAIL = "RF";

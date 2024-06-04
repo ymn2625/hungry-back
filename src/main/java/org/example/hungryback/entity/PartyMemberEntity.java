@@ -23,4 +23,8 @@ public class PartyMemberEntity {
         this.partyId = partyId;
         this.memberRole = memberRole;
     }
+
+    public void patchMemberRole (int memberRole) {
+        this.memberRole = memberRole;
+    }
 }

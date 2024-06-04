@@ -9,9 +9,9 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class PostPartyMemberRequestDto {
+public class PatchMemberRoleRequestDto {
     @Email
     @NotBlank
     private String userEmail;
-    private int partyId;
+    private Integer partyId;
 }

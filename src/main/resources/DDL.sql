@@ -99,3 +99,5 @@ select * from party_member;
 delete from party_member where party_id = 1 and user_email = 'leeym26154@naver.com';
 
 select * from party where party_id in (select party_id from party_member where user_email = 'leeym26154@naver.com');
+
+INSERT INTO party_member (user_email, party_id, member_role) VALUES ('leeym2615@naver.com', 5, 0);

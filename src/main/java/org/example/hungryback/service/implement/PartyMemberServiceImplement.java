@@ -2,7 +2,9 @@ package org.example.hungryback.service.implement;
 
 import lombok.RequiredArgsConstructor;
 import org.example.hungryback.dto.ResponseDto;
+import org.example.hungryback.dto.request.partyMember.PatchMemberRoleRequestDto;
 import org.example.hungryback.dto.request.partyMember.PostPartyMemberRequestDto;
+import org.example.hungryback.dto.response.party.PatchMemberRoleResponseDto;
 import org.example.hungryback.dto.response.partyMember.DeletePartyMemberResponseDto;
 import org.example.hungryback.dto.response.partyMember.PostPartyMemberResponseDto;
 import org.example.hungryback.entity.PartyEntity;
@@ -28,24 +30,18 @@ public class PartyMemberServiceImplement implements PartyMemberService {
         String userEmail = dto.getUserEmail();
         Integer partyId = dto.getPartyId();
 
-        try {
-            boolean isExistUser = userRepository.existsByUserEmail(userEmail);
-            if(!isExistUser) return PostPartyMemberResponseDto.noExistUser();
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            return ResponseDto.databaseError();
-        }
+        boolean isExistUser = userRepository.existsByUserEmail(userEmail);
+        if(!isExistUser) return PostPartyMemberResponseDto.noExistUser();
 
         PartyMemberEntity partyMemberEntity = partyMemberRepository.findByUserEmailAndPartyId(userEmail, partyId);
         if(partyMemberEntity != null) {
             return PostPartyMemberResponseDto.duplicatedPartyMember();
-        } else {
-            partyMemberEntity = new PartyMemberEntity(userEmail, partyId, 0);
-            partyMemberRepository.save(partyMemberEntity);
         }
 
-        PartyEntity partyEntity = partyRepository.findByPartyId(400);
+        partyMemberEntity = new PartyMemberEntity(userEmail, partyId, 0);
+        partyMemberRepository.save(partyMemberEntity);
+
+        PartyEntity partyEntity = partyRepository.findByPartyId(partyId);
         partyEntity.patchPartyCount(1);
         partyRepository.save(partyEntity);
 
@@ -55,22 +51,42 @@ public class PartyMemberServiceImplement implements PartyMemberService {
     @Override
     @Transactional
     public ResponseEntity<? super DeletePartyMemberResponseDto> deletePartyMember(String userEmail, String email, Integer partyId) {
-        try {
-            if(!userEmail.equals(email)) return DeletePartyMemberResponseDto.noPermission();
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            ResponseDto.databaseError();
-        }
-
         PartyMemberEntity partyMemberEntity = partyMemberRepository.findByUserEmailAndPartyId(userEmail, partyId);
-        if(partyMemberEntity == null) return DeletePartyMemberResponseDto.noExistPartyMember();
-        partyMemberRepository.delete(partyMemberEntity);
-
         PartyEntity partyEntity = partyRepository.findByPartyId(partyId);
+
+        if(!userEmail.equals(email)) return DeletePartyMemberResponseDto.noPermission();
+        if(partyMemberEntity == null) return DeletePartyMemberResponseDto.noExistPartyMember();
+        if(partyMemberEntity.getMemberRole() == 1) return DeletePartyMemberResponseDto.partyLeader();
+
         partyEntity.patchPartyCount(-1);
+
+        partyMemberRepository.delete(partyMemberEntity);
         partyRepository.save(partyEntity);
 
         return DeletePartyMemberResponseDto.success();
     }
+
+    @Override
+    public ResponseEntity<? super PatchMemberRoleResponseDto> patchMemberRole(PatchMemberRoleRequestDto dto, String email) {
+        Integer partyId = dto.getPartyId();
+        String userEmail = dto.getUserEmail();
+
+        PartyMemberEntity partyLeader = partyMemberRepository.findByUserEmailAndPartyId(email, partyId);
+        PartyMemberEntity partyMemberEntity = partyMemberRepository.findByUserEmailAndPartyId(userEmail, partyId);
+
+
+        if(partyLeader == null) return PatchMemberRoleResponseDto.noPermission();
+        if(partyLeader.getMemberRole() != 1) return PatchMemberRoleResponseDto.noPermission();
+        if(partyMemberEntity == null) return PatchMemberRoleResponseDto.noExistUser();
+
+        partyLeader.patchMemberRole(0);
+        partyMemberEntity.patchMemberRole(1);
+
+        partyMemberRepository.save(partyLeader);
+        partyMemberRepository.save(partyMemberEntity);
+
+        return PatchMemberRoleResponseDto.success();
+    }
+
+
 }
