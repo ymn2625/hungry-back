@@ -10,6 +10,7 @@ public interface ResponseMessage {
     String DUPLICATE_TEL = "Duplicate tel.";
     String NOT_EXIST_USER = "Not exist user";
     String NOT_EXIST_STORE = "Not exist store";
+    String NOT_EXIST_PARTY = "Not exist party";
 
     String SIGN_IN_FAIL = "Login information mismatch.";
     String CERTIFICATION_FAIL = "Certification failed.";

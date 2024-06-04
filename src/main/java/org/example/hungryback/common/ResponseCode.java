@@ -8,7 +8,7 @@ public interface ResponseCode {
     String DUPLICATE_TEL = "DT";
     String NOT_EIXST_USER = "NU";
     String NOT_EIXST_STORE = "NS";
-
+    String NOT_EIXST_PARTY = "NP";
     String SIGN_IN_FAIL = "SF";
     String CERTIFICATION_FAIL = "CF";
     String REISSUE_FAIL = "RF";
