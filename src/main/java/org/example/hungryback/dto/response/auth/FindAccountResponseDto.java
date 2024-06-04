@@ -26,7 +26,7 @@ public class FindAccountResponseDto extends ResponseDto {
     }
 
     public static ResponseEntity<ResponseDto> notExistUser () {
-        ResponseDto responseBody = new ResponseDto(ResponseCode.NOT_EIXST_USER, ResponseMessage.NOT_EXIST_USER);
+        ResponseDto responseBody = new ResponseDto(ResponseCode.NOT_EXIST_USER, ResponseMessage.NOT_EXIST_USER);
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseBody);
     }
 }

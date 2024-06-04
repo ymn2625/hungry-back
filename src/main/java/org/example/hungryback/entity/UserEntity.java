@@ -10,9 +10,6 @@ import org.example.hungryback.dto.request.auth.SignUpRequestDto;
 @Table(name="user")
 public class UserEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int userId;
-    @Column(unique = true)
     private String userEmail;
     private String userPassword;
     private String userType;
