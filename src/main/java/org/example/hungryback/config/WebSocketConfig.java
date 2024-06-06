@@ -20,8 +20,10 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
         //stomp의 접속 주소
-        registry.addEndpoint("/ws").setAllowedOriginPatterns("*");
-//        registry.setErrorHandler(stompExceptionHandler);
+        registry.setErrorHandler(stompExceptionHandler)
+                .addEndpoint("/ws")
+                .addInterceptors()
+                .setAllowedOriginPatterns("*");
     }
 
     @Override
@@ -33,8 +35,8 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 
     }
 
-//    @Override
-//    public void configureClientInboundChannel(ChannelRegistration registration) {
-//        registration.interceptors(stompHandler);
-//    }
+    @Override
+    public void configureClientInboundChannel(ChannelRegistration registration) {
+        registration.interceptors(stompHandler);
+    }
 }

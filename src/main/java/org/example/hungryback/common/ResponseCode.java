@@ -21,8 +21,9 @@ public interface ResponseCode {
     String MESSAGE_FAIL = "MF";
     String DATABASE_ERROR = "DBE";
 
-    String INVALID_MESSAGE = "IM";
     String INVALID_TOKEN = "IT";
+    String MESSAGE_DELIVERY_ERROR = "MDE";
+    String UNEXPECTED_MESSAGE_ERROR = "UME";
 
     String NO_PERMISSION = "NP";
 
