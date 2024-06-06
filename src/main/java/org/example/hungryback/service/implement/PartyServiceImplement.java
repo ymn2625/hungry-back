@@ -1,76 +1,87 @@
 package org.example.hungryback.service.implement;
 
-import org.example.hungryback.dto.request.party.PartyRequestDto;
-import org.example.hungryback.dto.response.party.PartyResponseDto;
+import lombok.RequiredArgsConstructor;
+import org.example.hungryback.dto.ResponseDto;
+import org.example.hungryback.dto.request.party.PostPartyRequestDto;
+import org.example.hungryback.dto.response.party.GetPartiesResponseDto;
+import org.example.hungryback.dto.response.party.PostPartyResponseDto;
 import org.example.hungryback.entity.PartyEntity;
-import org.example.hungryback.repository.PartyRepository;
+import org.example.hungryback.entity.PartyMemberEntity;
+import org.example.hungryback.repository.*;
 import org.example.hungryback.service.PartyService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
-@Transactional
+@RequiredArgsConstructor
 public class PartyServiceImplement implements PartyService {
-
     private final PartyRepository partyRepository;
+    private final PartyMemberRepository partyMemberRepository;
+    private final UserRepository userRepository;
+    private final StoreRepository storeRepository;
 
-    public PartyServiceImplement(PartyRepository partyRepository) {
-        this.partyRepository = partyRepository;
+    @Override
+    @Transactional
+    public ResponseEntity<? super PostPartyResponseDto> postParty(PostPartyRequestDto dto) {
+
+        String userEmail = dto.getUserEmail();
+        int storeId = dto.getStoreId();
+
+        try {
+            boolean isExistUser = userRepository.existsByUserEmail(userEmail);
+            if(!isExistUser) return PostPartyResponseDto.noExistUser();
+
+            boolean isExistStore = storeRepository.existsByStoreId(storeId);
+            if(!isExistStore) return PostPartyResponseDto.noExistStore();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseDto.databaseError();
+        }
+
+        PartyEntity partyEntity = new PartyEntity(dto);
+        partyRepository.save(partyEntity);
+
+        PartyMemberEntity partyMemberEntity = new PartyMemberEntity(userEmail, partyEntity.getPartyId(), 1);
+        partyMemberRepository.save(partyMemberEntity);
+
+        return PostPartyResponseDto.success();
     }
 
     @Override
-    public List<PartyResponseDto> partyList(PartyRequestDto dto) {
-        Integer storeId = Integer.parseInt(dto.getStoreId());
+    public ResponseEntity<? super GetPartiesResponseDto> getParties(Integer storeId) {
+        List<PartyEntity> resultSets = new ArrayList<>();
+        try {
+            boolean isExistStore = storeRepository.existsByStoreId(storeId);
+            if(!isExistStore) return GetPartiesResponseDto.noExistStore();
 
-        List<PartyEntity> parties = partyRepository.findByPartyStoreId(storeId);
-        // PartyEntity를 PartyResponseDto로 변환하여 반환합니다.
-        return parties.stream()
-                .map(this::mapToPartyResponseDto)
-                .collect(Collectors.toList());
+            resultSets = partyRepository.findByStoreId(storeId);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            ResponseDto.databaseError();
+        }
+        return GetPartiesResponseDto.success(resultSets);
     }
-
 
     @Override
-    public PartyResponseDto partyInfo(PartyRequestDto dto) {
-        Integer partyId = Integer.parseInt(dto.getPartyId());
-        PartyEntity party = partyRepository.findByPartyId(partyId);
-        // StoreEntity를 DTO로 변환
-        PartyResponseDto responseDto = convertEntityToDto(party);
-        return responseDto;
+    public ResponseEntity<? super GetPartiesResponseDto> getPartiesByUserEmail(String userEmail, String email) {
+        List<PartyEntity> resultSets = new ArrayList<>();
+        try {
+            if(!userEmail.equals(email)) return GetPartiesResponseDto.noPermission();
+
+            boolean isExistUser = userRepository.existsByUserEmail(userEmail);
+            if(!isExistUser) return GetPartiesResponseDto.noExistUser();
+
+            resultSets = partyRepository.findByUserEmail(userEmail);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseDto.databaseError();
+        }
+        return GetPartiesResponseDto.success(resultSets);
     }
 
-    // 엔티티를 DTO로 변환하는 메서드
-    private PartyResponseDto convertEntityToDto(PartyEntity party) {
-        PartyResponseDto dto = new PartyResponseDto();
-        dto.setPartyId(party.getPartyId());
-        dto.setPartyStoreId(party.getPartyStoreId());
-        dto.setPartyName(party.getPartyName());
-        dto.setPartyHost(party.getPartyHost());
-        dto.setPartyLimitNum(party.getPartyLimitNum());
-        dto.setPartyDescription(party.getPartyDescription());
-        dto.setPartyCreatedDay(party.getPartyCreatedDay());
-        dto.setPartyPayingState(party.getPartyPayingState());
-        dto.setPartyExitedDay(party.getPartyExitedDay());
-        // 나머지 필드들도 엔티티에서 가져와서 DTO에 설정
-
-        return dto;
-    }
-
-
-    private PartyResponseDto mapToPartyResponseDto(PartyEntity partyEntity) {
-        return new PartyResponseDto(
-                partyEntity.getPartyId(),
-                partyEntity.getPartyStoreId(),
-                partyEntity.getPartyName(),
-                partyEntity.getPartyHost(),
-                partyEntity.getPartyLimitNum(),
-                partyEntity.getPartyDescription(),
-                partyEntity.getPartyCreatedDay(),
-                partyEntity.getPartyPayingState(),
-                partyEntity.getPartyExitedDay()
-        );
-    }
 }

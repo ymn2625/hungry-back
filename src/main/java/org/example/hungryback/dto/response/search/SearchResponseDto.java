@@ -39,7 +39,7 @@ public class SearchResponseDto extends ResponseDto {
     }
 
     public static ResponseEntity<ResponseDto> storeNotExist(StoreEntity storeEntity) {
-        ResponseDto responseBody = new ResponseDto(ResponseCode.NOT_EIXST_STORE, ResponseMessage.NOT_EXIST_STORE);
+        ResponseDto responseBody = new ResponseDto(ResponseCode.NOT_EXIST_STORE, ResponseMessage.NOT_EXIST_STORE);
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseBody);
     }
 }

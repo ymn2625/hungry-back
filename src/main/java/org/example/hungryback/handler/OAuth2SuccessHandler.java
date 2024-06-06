@@ -38,7 +38,7 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
             refreshTokenRepository.save(refreshTokenEntity);
             jwtProvider.refreshTokenCookie(response, refreshToken);
 
-            response.sendRedirect("http://localhost:3000/auth/oauth-response/" + token + "/360000");
+            response.sendRedirect("http://localhost:3000/auth/oauth-response/" + token + "/3600000");
         }
     }
 }

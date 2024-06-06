@@ -46,7 +46,7 @@ public class WebSecurityConfig {
                 )
 
                 .authorizeHttpRequests(request -> request
-                        .requestMatchers("/api/v1/auth/**", "/oauth2/**", "/api/v1/jwt/**", "/file/**").permitAll()
+                        .requestMatchers("/api/v1/auth/**", "/oauth2/**", "/api/v1/jwt/**", "/file/**", "/ws/**").permitAll()
                         .requestMatchers("/api/v1/**").hasRole("USER")  // 만약 role이 block(신고당한 사람)일 경우 서비스 이용 못하게
                         .requestMatchers("/api/v1/admin/**").hasRole("ADMIN")   // 일단 임의로 관리자 쪽 설정
                         .anyRequest().authenticated()
