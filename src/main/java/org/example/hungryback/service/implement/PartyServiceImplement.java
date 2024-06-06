@@ -60,6 +60,7 @@ public class PartyServiceImplement implements PartyService {
 
             resultSets = partyRepository.findByStoreId(storeId);
 
+            System.out.println(resultSets.get(0).getPartyName()+"파티이름은?");
         } catch (Exception e) {
             e.printStackTrace();
             ResponseDto.databaseError();
