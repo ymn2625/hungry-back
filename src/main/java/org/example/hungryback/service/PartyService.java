@@ -9,4 +9,5 @@ public interface PartyService {
     ResponseEntity<? super PostPartyResponseDto> postParty (PostPartyRequestDto dto);
     ResponseEntity<? super GetPartiesResponseDto> getParties (Integer storeId);
     ResponseEntity<? super GetPartiesResponseDto> getPartiesByUserEmail (String userEmail, String email);
+
 }

@@ -21,4 +21,5 @@ public interface PartyRepository extends JpaRepository<PartyEntity, Integer> {
     PartyEntity findByPartyId(Integer partyId);
 
     boolean existsByPartyId(Integer partyId);
+
 }

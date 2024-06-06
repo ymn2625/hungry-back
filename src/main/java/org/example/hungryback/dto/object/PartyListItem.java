@@ -15,7 +15,8 @@ public class PartyListItem {
     private int partyId;
     private int partyCount;
     private int partyLimit;
-    private String partyTitle;
+    private String partyName;
+    private String partyDescription;
     private String partyTime;
     private String partyStartTime;
     private String partyEndTime;
@@ -25,7 +26,8 @@ public class PartyListItem {
         this.partyId = partyEntity.getPartyId();
         this.partyCount = partyEntity.getPartyCount();
         this.partyLimit = partyEntity.getPartyLimit();
-        this.partyTitle = partyEntity.getPartyTitle();
+        this.partyName = partyEntity.getPartyName();
+        this.partyDescription = partyEntity.getPartyDescription();
         this.partyTime = partyEntity.getPartyTime();
         this.partyStartTime = partyEntity.getPartyStartTime();
         this.partyEndTime = partyEntity.getPartyEndTime();

@@ -4,7 +4,8 @@ import lombok.RequiredArgsConstructor;
 import org.example.hungryback.dto.ResponseDto;
 import org.example.hungryback.dto.request.partyMember.PatchMemberRoleRequestDto;
 import org.example.hungryback.dto.request.partyMember.PostPartyMemberRequestDto;
-import org.example.hungryback.dto.response.party.PatchMemberRoleResponseDto;
+import org.example.hungryback.dto.response.partyMember.GetPartyMembersResponseDto;
+import org.example.hungryback.dto.response.partyMember.PatchMemberRoleResponseDto;
 import org.example.hungryback.dto.response.partyMember.DeletePartyMemberResponseDto;
 import org.example.hungryback.dto.response.partyMember.PostPartyMemberResponseDto;
 import org.example.hungryback.entity.PartyEntity;
@@ -12,10 +13,14 @@ import org.example.hungryback.entity.PartyMemberEntity;
 import org.example.hungryback.repository.PartyMemberRepository;
 import org.example.hungryback.repository.PartyRepository;
 import org.example.hungryback.repository.UserRepository;
+import org.example.hungryback.repository.resultSet.GetPartyMemberListResultSet;
 import org.example.hungryback.service.PartyMemberService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -86,6 +91,23 @@ public class PartyMemberServiceImplement implements PartyMemberService {
         partyMemberRepository.save(partyMemberEntity);
 
         return PatchMemberRoleResponseDto.success();
+    }
+
+    @Override
+    public ResponseEntity<? super GetPartyMembersResponseDto> getPartyMembers(String userEmail, String email, Integer partyId) {
+        List<GetPartyMemberListResultSet> resultSets = new ArrayList<>();
+        try {
+            if(!userEmail.equals(email)) return GetPartyMembersResponseDto.noPermission();
+
+            boolean isExistParty = partyRepository.existsByPartyId(partyId);
+            if(!isExistParty) return GetPartyMembersResponseDto.noExistParty();
+
+            resultSets = partyMemberRepository.findPartyMembersByPartyId(partyId);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseDto.databaseError();
+        }
+        return GetPartyMembersResponseDto.success(resultSets);
     }
 
 

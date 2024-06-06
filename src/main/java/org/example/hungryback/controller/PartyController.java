@@ -7,7 +7,8 @@ import org.example.hungryback.dto.request.partyMember.PatchMemberRoleRequestDto;
 import org.example.hungryback.dto.request.partyMember.PostPartyMemberRequestDto;
 import org.example.hungryback.dto.response.message.GetMessagesResponseDto;
 import org.example.hungryback.dto.response.party.GetPartiesResponseDto;
-import org.example.hungryback.dto.response.party.PatchMemberRoleResponseDto;
+import org.example.hungryback.dto.response.partyMember.GetPartyMembersResponseDto;
+import org.example.hungryback.dto.response.partyMember.PatchMemberRoleResponseDto;
 import org.example.hungryback.dto.response.party.PostPartyResponseDto;
 import org.example.hungryback.dto.response.partyMember.DeletePartyMemberResponseDto;
 import org.example.hungryback.dto.response.partyMember.PostPartyMemberResponseDto;
@@ -47,6 +48,12 @@ public class PartyController {
     @GetMapping("/{userEmail}/parties/{partyId}")
     public ResponseEntity<? super GetMessagesResponseDto> getMessages(@PathVariable("userEmail") String userEmail, @AuthenticationPrincipal String email, @PathVariable Integer partyId) {
         ResponseEntity<? super GetMessagesResponseDto> response = messageService.getMessages(userEmail, email, partyId);
+        return response;
+    }
+
+    @GetMapping("/{userEmail}/parties/{partyId}/party-member")
+    public ResponseEntity<? super GetPartyMembersResponseDto> getPartyMembers(@PathVariable("userEmail") String userEmail, @AuthenticationPrincipal String email, @PathVariable Integer partyId) {
+        ResponseEntity<? super GetPartyMembersResponseDto> response = partyMemberService.getPartyMembers(userEmail, email, partyId);
         return response;
     }
 

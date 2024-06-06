@@ -9,7 +9,8 @@ import lombok.Setter;
 @NoArgsConstructor
 public class PostPartyRequestDto {
     private int partyLimit;
-    private String partyTitle;
+    private String partyName;
+    private String partyDescription;
     private String partyTime;
     private String partyStartTime;
     private String partyEndTime;

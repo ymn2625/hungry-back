@@ -1,4 +1,4 @@
-package org.example.hungryback.dto.request.chat;
+package org.example.hungryback.dto.request.message;
 
 import lombok.Builder;
 import lombok.Getter;

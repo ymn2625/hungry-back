@@ -1,4 +1,4 @@
-package org.example.hungryback.dto.response.party;
+package org.example.hungryback.dto.response.partyMember;
 
 import lombok.Getter;
 import org.example.hungryback.common.ResponseCode;

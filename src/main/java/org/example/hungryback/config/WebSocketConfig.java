@@ -15,13 +15,13 @@ import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerCo
 @EnableWebSocketMessageBroker
 public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
     private final StompHandler stompHandler;
-    private final StompExceptionHandler stompErrorHandler;
+    private final StompExceptionHandler stompExceptionHandler;
 
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
         //stomp의 접속 주소
-        registry.addEndpoint("/ws").setAllowedOriginPatterns("*").withSockJS();
-        registry.setErrorHandler(stompErrorHandler);
+        registry.addEndpoint("/ws").setAllowedOriginPatterns("*");
+//        registry.setErrorHandler(stompExceptionHandler);
     }
 
     @Override
@@ -29,12 +29,12 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
         //클라이언트의 send요청 처리
         registry.setApplicationDestinationPrefixes("/pub");
         //sub하는 클라이언트에게 메시지 전달
-        registry.enableSimpleBroker("/sub","/sub/list");
+        registry.enableSimpleBroker("/sub");
 
     }
 
-    @Override
-    public void configureClientInboundChannel(ChannelRegistration registration) {
-        registration.interceptors(stompHandler);
-    }
+//    @Override
+//    public void configureClientInboundChannel(ChannelRegistration registration) {
+//        registration.interceptors(stompHandler);
+//    }
 }
