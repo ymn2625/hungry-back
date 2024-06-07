@@ -36,6 +36,7 @@ public class PartyController {
     @GetMapping("/stores/{storeId}/parties")
     public ResponseEntity<? super GetPartiesResponseDto> getPartiesByStoreId(@PathVariable("storeId") Integer storeId) {
         ResponseEntity<? super GetPartiesResponseDto> response = partyService.getParties(storeId);
+
         return response;
     }
 
