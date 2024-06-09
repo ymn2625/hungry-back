@@ -14,11 +14,11 @@ import java.util.List;
 @Getter
 public class GetPartiesResponseDto extends ResponseDto {
 
-    private List<PartyListItem> partyList;
+    private List<PartyListItem> partyListFromServer;
 
     private GetPartiesResponseDto(List<PartyEntity> resultSets) {
         super();
-        this.partyList = PartyListItem.copyList(resultSets);
+        this.partyListFromServer = PartyListItem.copyList(resultSets);
     }
 
     public static ResponseEntity<GetPartiesResponseDto> success(List<PartyEntity> resultSets) {
