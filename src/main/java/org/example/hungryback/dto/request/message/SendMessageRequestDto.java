@@ -1,18 +1,15 @@
 package org.example.hungryback.dto.request.message;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
-public class MessageDto {
+@AllArgsConstructor
+public class SendMessageRequestDto {
     private String userEmail;
     private Integer partyId;
     private String content;
-
-    public MessageDto(String userEmail, Integer partyId, String content) {
-        this.userEmail = userEmail;
-        this.partyId = partyId;
-        this.content = content;
-    }
+    private String sendTime;
 }

@@ -3,7 +3,7 @@ package org.example.hungryback.dto.object;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.example.hungryback.repository.resultSet.GetPartyMemberListResultSet;
+import org.example.hungryback.repository.resultSet.GetPartyMemberResultSet;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,16 +17,16 @@ public class PartyMemberListItem {
     private String userProfileImg;
     private Integer memberRole;
 
-    public PartyMemberListItem (GetPartyMemberListResultSet resultSet) {
+    public PartyMemberListItem (GetPartyMemberResultSet resultSet) {
         this.userEmail = resultSet.getUserEmail();
         this.userNickname = resultSet.getUserNickname();
         this.userProfileImg = resultSet.getUserProfileImg();
         this.memberRole = resultSet.getMemberRole();
     }
 
-    public static List<PartyMemberListItem> copyList(List<GetPartyMemberListResultSet> resultSets) {
+    public static List<PartyMemberListItem> copyList(List<GetPartyMemberResultSet> resultSets) {
         List<PartyMemberListItem> list = new ArrayList<>();
-        for(GetPartyMemberListResultSet resultSet : resultSets) {
+        for(GetPartyMemberResultSet resultSet : resultSets) {
             PartyMemberListItem partyMemberListItem = new PartyMemberListItem(resultSet);
             list.add(partyMemberListItem);
         }

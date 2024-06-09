@@ -39,21 +39,21 @@ public class PartyController {
         return response;
     }
 
-    @GetMapping("/{userEmail}/parties")
-    public ResponseEntity<? super GetPartiesResponseDto> getPartiesByUserEmail(@PathVariable("userEmail") String userEmail, @AuthenticationPrincipal String email) {
-        ResponseEntity<? super GetPartiesResponseDto> response = partyService.getPartiesByUserEmail(userEmail, email);
+    @GetMapping("/parties")
+    public ResponseEntity<? super GetPartiesResponseDto> getPartiesByUserEmail(@AuthenticationPrincipal String userEmail) {
+        ResponseEntity<? super GetPartiesResponseDto> response = partyService.getPartiesByUserEmail(userEmail);
         return response;
     }
 
-    @GetMapping("/{userEmail}/parties/{partyId}")
-    public ResponseEntity<? super GetMessagesResponseDto> getMessages(@PathVariable("userEmail") String userEmail, @AuthenticationPrincipal String email, @PathVariable Integer partyId) {
-        ResponseEntity<? super GetMessagesResponseDto> response = messageService.getMessages(userEmail, email, partyId);
+    @GetMapping("/parties/{partyId}")
+    public ResponseEntity<? super GetMessagesResponseDto> getMessages(@AuthenticationPrincipal String userEmail, @PathVariable Integer partyId) {
+        ResponseEntity<? super GetMessagesResponseDto> response = messageService.getMessages(userEmail, partyId);
         return response;
     }
 
-    @GetMapping("/{userEmail}/parties/{partyId}/party-member")
-    public ResponseEntity<? super GetPartyMembersResponseDto> getPartyMembers(@PathVariable("userEmail") String userEmail, @AuthenticationPrincipal String email, @PathVariable Integer partyId) {
-        ResponseEntity<? super GetPartyMembersResponseDto> response = partyMemberService.getPartyMembers(userEmail, email, partyId);
+    @GetMapping("/parties/{partyId}/party-member")
+    public ResponseEntity<? super GetPartyMembersResponseDto> getPartyMembers(@AuthenticationPrincipal String userEmail, @PathVariable Integer partyId) {
+        ResponseEntity<? super GetPartyMembersResponseDto> response = partyMemberService.getPartyMembers(userEmail, partyId);
         return response;
     }
 
@@ -63,15 +63,15 @@ public class PartyController {
         return response;
     }
 
-    @DeleteMapping("/{userEmail}/parties/{partyId}")
-    public ResponseEntity<? super DeletePartyMemberResponseDto> deletePartyMember(@PathVariable("userEmail") String userEmail, @AuthenticationPrincipal String email, @PathVariable Integer partyId) {
-        ResponseEntity<? super DeletePartyMemberResponseDto> response = partyMemberService.deletePartyMember(userEmail, email, partyId);
+    @DeleteMapping("/parties/{partyId}")
+    public ResponseEntity<? super DeletePartyMemberResponseDto> deletePartyMember(@AuthenticationPrincipal String userEmail, @PathVariable Integer partyId) {
+        ResponseEntity<? super DeletePartyMemberResponseDto> response = partyMemberService.deletePartyMember(userEmail, partyId);
         return response;
     }
 
-    @PatchMapping("/{userEmail}/parties/party-member")
-    public ResponseEntity<? super PatchMemberRoleResponseDto> patchMemberRole(@RequestBody @Valid PatchMemberRoleRequestDto requestBody, @AuthenticationPrincipal String email) {
-        ResponseEntity<? super PatchMemberRoleResponseDto> response = partyMemberService.patchMemberRole(requestBody, email);
+    @PatchMapping("/parties/{partyId}/party-member")
+    public ResponseEntity<? super PatchMemberRoleResponseDto> patchMemberRole(@RequestBody @Valid PatchMemberRoleRequestDto requestBody, @AuthenticationPrincipal String userEmail) {
+        ResponseEntity<? super PatchMemberRoleResponseDto> response = partyMemberService.patchMemberRole(requestBody, userEmail);
         return response;
     }
 }

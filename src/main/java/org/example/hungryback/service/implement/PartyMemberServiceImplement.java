@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.example.hungryback.dto.ResponseDto;
 import org.example.hungryback.dto.request.partyMember.PatchMemberRoleRequestDto;
 import org.example.hungryback.dto.request.partyMember.PostPartyMemberRequestDto;
+import org.example.hungryback.dto.response.message.GetMessagesResponseDto;
 import org.example.hungryback.dto.response.partyMember.GetPartyMembersResponseDto;
 import org.example.hungryback.dto.response.partyMember.PatchMemberRoleResponseDto;
 import org.example.hungryback.dto.response.partyMember.DeletePartyMemberResponseDto;
@@ -13,7 +14,7 @@ import org.example.hungryback.entity.PartyMemberEntity;
 import org.example.hungryback.repository.PartyMemberRepository;
 import org.example.hungryback.repository.PartyRepository;
 import org.example.hungryback.repository.UserRepository;
-import org.example.hungryback.repository.resultSet.GetPartyMemberListResultSet;
+import org.example.hungryback.repository.resultSet.GetPartyMemberResultSet;
 import org.example.hungryback.service.PartyMemberService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -55,12 +56,13 @@ public class PartyMemberServiceImplement implements PartyMemberService {
 
     @Override
     @Transactional
-    public ResponseEntity<? super DeletePartyMemberResponseDto> deletePartyMember(String userEmail, String email, Integer partyId) {
-        PartyMemberEntity partyMemberEntity = partyMemberRepository.findByUserEmailAndPartyId(userEmail, partyId);
+    public ResponseEntity<? super DeletePartyMemberResponseDto> deletePartyMember(String userEmail, Integer partyId) {
         PartyEntity partyEntity = partyRepository.findByPartyId(partyId);
+        if(partyEntity == null) return DeletePartyMemberResponseDto.noExistParty();
 
-        if(!userEmail.equals(email)) return DeletePartyMemberResponseDto.noPermission();
-        if(partyMemberEntity == null) return DeletePartyMemberResponseDto.noExistPartyMember();
+        PartyMemberEntity partyMemberEntity = partyMemberRepository.findByUserEmailAndPartyId(userEmail, partyId);
+        if(partyMemberEntity == null) return DeletePartyMemberResponseDto.noPermission();
+
         if(partyMemberEntity.getMemberRole() == 1) return DeletePartyMemberResponseDto.partyLeader();
 
         partyEntity.patchPartyCount(-1);
@@ -94,20 +96,23 @@ public class PartyMemberServiceImplement implements PartyMemberService {
     }
 
     @Override
-    public ResponseEntity<? super GetPartyMembersResponseDto> getPartyMembers(String userEmail, String email, Integer partyId) {
-        List<GetPartyMemberListResultSet> resultSets = new ArrayList<>();
+    public ResponseEntity<? super GetPartyMembersResponseDto> getPartyMembers(String userEmail, Integer partyId) {
+        List<GetPartyMemberResultSet> resultSets = new ArrayList<>();
+        GetPartyMemberResultSet userProfile;
         try {
-            if(!userEmail.equals(email)) return GetPartyMembersResponseDto.noPermission();
-
             boolean isExistParty = partyRepository.existsByPartyId(partyId);
             if(!isExistParty) return GetPartyMembersResponseDto.noExistParty();
 
+            boolean isPartyMember = partyMemberRepository.existsByUserEmailAndPartyId(userEmail, partyId);
+            if(!isPartyMember) return GetPartyMembersResponseDto.noPermission();
+
             resultSets = partyMemberRepository.findPartyMembersByPartyId(partyId);
+            userProfile = partyMemberRepository.findPartyMemberByPartyIdAndUserEmail(partyId, userEmail);
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseDto.databaseError();
         }
-        return GetPartyMembersResponseDto.success(resultSets);
+        return GetPartyMembersResponseDto.success(resultSets, userProfile);
     }
 
 

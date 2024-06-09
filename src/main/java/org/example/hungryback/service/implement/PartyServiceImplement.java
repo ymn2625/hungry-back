@@ -68,11 +68,9 @@ public class PartyServiceImplement implements PartyService {
     }
 
     @Override
-    public ResponseEntity<? super GetPartiesResponseDto> getPartiesByUserEmail(String userEmail, String email) {
+    public ResponseEntity<? super GetPartiesResponseDto> getPartiesByUserEmail(String userEmail) {
         List<PartyEntity> resultSets = new ArrayList<>();
         try {
-            if(!userEmail.equals(email)) return GetPartiesResponseDto.noPermission();
-
             boolean isExistUser = userRepository.existsByUserEmail(userEmail);
             if(!isExistUser) return GetPartiesResponseDto.noExistUser();
 

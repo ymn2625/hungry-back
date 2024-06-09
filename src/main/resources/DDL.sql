@@ -96,7 +96,7 @@ INSERT INTO message (user_email, party_id, content, send_time) VALUES ('leeym261
 select * from message;
 select * from party;
 select * from party_member;
-update party_member set member_role = 0 where user_email = 'leeym2615@naver.com' and party_id = 5;
+update party_member set member_role = 1 where user_email = 'leeym26154@naver.com' and party_id = 5;
 
 SELECT u.user_email, u.user_nickname, u.user_profile_img, pm.member_role FROM user u join party_member pm using(user_email) where pm.party_id = 5 order by member_role desc
 
@@ -104,3 +104,4 @@ select * from party where party_id in (select party_id from party_member where u
 
 INSERT INTO party_member (user_email, party_id, member_role) VALUES ('leeym2615@naver.com', 5, 0);
 
+SELECT m.message_id messageId, u.user_email userEmail, u.user_nickname userNickname, u.user_profile_img userProfileImg, m.party_id partyId, m.content, m.send_time sendTime FROM user u join message m using(user_email) where m.party_id = 1 order by m.send_time desc;

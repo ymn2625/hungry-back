@@ -7,7 +7,7 @@ import org.springframework.messaging.MessageDeliveryException;
 import org.springframework.messaging.simp.stomp.StompCommand;
 import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
 import org.springframework.messaging.support.MessageBuilder;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.messaging.StompSubProtocolErrorHandler;
 
@@ -15,9 +15,10 @@ import java.nio.charset.StandardCharsets;
 
 @Component
 public class StompExceptionHandler extends StompSubProtocolErrorHandler {
-    public StompExceptionHandler (){
+    public StompExceptionHandler() {
         super();
     }
+
     @Override
     public Message<byte[]> handleClientMessageProcessingError(Message<byte[]> clientMessage, Throwable ex) {
         StompHeaderAccessor accessor = StompHeaderAccessor.create(StompCommand.ERROR);
@@ -29,12 +30,16 @@ public class StompExceptionHandler extends StompSubProtocolErrorHandler {
     }
 
     private String getErrorMessage(Throwable ex) {
-        if (ex.getCause() instanceof MalformedJwtException) {
+        Throwable cause = ex.getCause() != null ? ex.getCause() : ex;
+
+        if (cause instanceof MalformedJwtException) {
             return ResponseCode.INVALID_TOKEN;
-        } else if (ex instanceof MessageDeliveryException) {
+        } else if (cause instanceof AccessDeniedException) {
+            return ResponseCode.NO_PERMISSION;
+        } else if (cause instanceof IllegalArgumentException) {
+            return ResponseCode.VALIDATION_FAIL;
+        } else if (cause instanceof MessageDeliveryException) {
             return ResponseCode.MESSAGE_DELIVERY_ERROR;
-        } else if (ex instanceof UsernameNotFoundException) {
-            return ResponseCode.NOT_EXIST_USER;
         } else {
             return ResponseCode.UNEXPECTED_MESSAGE_ERROR;
         }

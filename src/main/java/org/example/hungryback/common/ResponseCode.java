@@ -10,7 +10,6 @@ public interface ResponseCode {
     String NOT_EXIST_USER = "NU";
     String NOT_EXIST_STORE = "NS";
     String NOT_EXIST_PARTY = "NP";
-    String NOT_EXIST_PARTY_MEMBER = "NPM";
 
     String PARTY_LEADER = "PL";
 
