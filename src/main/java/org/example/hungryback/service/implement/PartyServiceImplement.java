@@ -3,11 +3,13 @@ package org.example.hungryback.service.implement;
 import lombok.RequiredArgsConstructor;
 import org.example.hungryback.dto.ResponseDto;
 import org.example.hungryback.dto.request.party.PostPartyRequestDto;
+import org.example.hungryback.dto.response.party.GetPartiesByUserEmailResponseDto;
 import org.example.hungryback.dto.response.party.GetPartiesResponseDto;
 import org.example.hungryback.dto.response.party.PostPartyResponseDto;
 import org.example.hungryback.entity.PartyEntity;
 import org.example.hungryback.entity.PartyMemberEntity;
 import org.example.hungryback.repository.*;
+import org.example.hungryback.repository.resultSet.GetPartyByUserEmailResultSet;
 import org.example.hungryback.service.PartyService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -69,18 +71,18 @@ public class PartyServiceImplement implements PartyService {
     }
 
     @Override
-    public ResponseEntity<? super GetPartiesResponseDto> getPartiesByUserEmail(String userEmail) {
-        List<PartyEntity> resultSets = new ArrayList<>();
+    public ResponseEntity<? super GetPartiesByUserEmailResponseDto> getPartiesByUserEmail(String userEmail) {
+        List<GetPartyByUserEmailResultSet> resultSets = new ArrayList<>();
         try {
             boolean isExistUser = userRepository.existsByUserEmail(userEmail);
-            if(!isExistUser) return GetPartiesResponseDto.noExistUser();
+            if(!isExistUser) return GetPartiesByUserEmailResponseDto.noExistUser();
 
             resultSets = partyRepository.findByUserEmail(userEmail);
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseDto.databaseError();
         }
-        return GetPartiesResponseDto.success(resultSets);
+        return GetPartiesByUserEmailResponseDto.success(resultSets);
     }
 
 }

@@ -19,6 +19,7 @@ public class PartyEntity {
     private int partyLimit;
     private String partyName;
     private String partyDescription;
+    private String partyImg;
     private String partyTime;
     private String partyStartTime;
     private String partyEndTime;
@@ -29,6 +30,7 @@ public class PartyEntity {
         this.partyLimit = dto.getPartyLimit();
         this.partyName = dto.getPartyName();
         this.partyDescription = dto.getPartyDescription();
+        this.partyImg = dto.getPartyImg();
         this.partyTime = dto.getPartyTime();
         this.partyStartTime = dto.getPartyStartTime();
         this.partyEndTime = dto.getPartyEndTime();
