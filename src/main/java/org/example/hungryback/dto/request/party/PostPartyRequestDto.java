@@ -11,6 +11,7 @@ public class PostPartyRequestDto {
     private int partyLimit;
     private String partyName;
     private String partyDescription;
+    private String partyImg;
     private String partyTime;
     private String partyStartTime;
     private String partyEndTime;

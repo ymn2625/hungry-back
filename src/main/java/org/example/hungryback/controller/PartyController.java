@@ -6,6 +6,7 @@ import org.example.hungryback.dto.request.party.PostPartyRequestDto;
 import org.example.hungryback.dto.request.partyMember.PatchMemberRoleRequestDto;
 import org.example.hungryback.dto.request.partyMember.PostPartyMemberRequestDto;
 import org.example.hungryback.dto.response.message.GetMessagesResponseDto;
+import org.example.hungryback.dto.response.party.GetPartiesByUserEmailResponseDto;
 import org.example.hungryback.dto.response.party.GetPartiesResponseDto;
 import org.example.hungryback.dto.response.partyMember.GetPartyMembersResponseDto;
 import org.example.hungryback.dto.response.partyMember.PatchMemberRoleResponseDto;
@@ -41,8 +42,8 @@ public class PartyController {
     }
 
     @GetMapping("/parties")
-    public ResponseEntity<? super GetPartiesResponseDto> getPartiesByUserEmail(@AuthenticationPrincipal String userEmail) {
-        ResponseEntity<? super GetPartiesResponseDto> response = partyService.getPartiesByUserEmail(userEmail);
+    public ResponseEntity<? super GetPartiesByUserEmailResponseDto> getPartiesByUserEmail(@AuthenticationPrincipal String userEmail) {
+        ResponseEntity<? super GetPartiesByUserEmailResponseDto> response = partyService.getPartiesByUserEmail(userEmail);
         return response;
     }
 
@@ -58,7 +59,7 @@ public class PartyController {
         return response;
     }
 
-    @PostMapping("/stores/{storeId}/party-member")
+    @PostMapping("/parties/{partyId}")
     public ResponseEntity<? super PostPartyMemberResponseDto> postPartyMember(@RequestBody @Valid PostPartyMemberRequestDto requestBody) {
         ResponseEntity<? super PostPartyMemberResponseDto> response = partyMemberService.postPartyMember(requestBody);
         return response;
