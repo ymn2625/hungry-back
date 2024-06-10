@@ -59,7 +59,7 @@ public class PartyController {
         return response;
     }
 
-    @PostMapping("/stores/{storeId}/party-member")
+    @PostMapping("/parties/{partyId}")
     public ResponseEntity<? super PostPartyMemberResponseDto> postPartyMember(@RequestBody @Valid PostPartyMemberRequestDto requestBody) {
         ResponseEntity<? super PostPartyMemberResponseDto> response = partyMemberService.postPartyMember(requestBody);
         return response;
