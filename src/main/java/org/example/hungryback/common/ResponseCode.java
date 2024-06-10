@@ -10,7 +10,6 @@ public interface ResponseCode {
     String NOT_EXIST_USER = "NU";
     String NOT_EXIST_STORE = "NS";
     String NOT_EXIST_PARTY = "NP";
-    String NOT_EXIST_PARTY_MEMBER = "NPM";
 
     String PARTY_LEADER = "PL";
 
@@ -21,8 +20,9 @@ public interface ResponseCode {
     String MESSAGE_FAIL = "MF";
     String DATABASE_ERROR = "DBE";
 
-    String INVALID_MESSAGE = "IM";
     String INVALID_TOKEN = "IT";
+    String MESSAGE_DELIVERY_ERROR = "MDE";
+    String UNEXPECTED_MESSAGE_ERROR = "UME";
 
     String NO_PERMISSION = "NP";
 

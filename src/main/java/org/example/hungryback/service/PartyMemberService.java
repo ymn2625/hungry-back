@@ -10,7 +10,7 @@ import org.springframework.http.ResponseEntity;
 
 public interface PartyMemberService {
     ResponseEntity<? super PostPartyMemberResponseDto> postPartyMember(PostPartyMemberRequestDto dto);
-    ResponseEntity<? super DeletePartyMemberResponseDto> deletePartyMember(String userEmail, String email, Integer partyId);
+    ResponseEntity<? super DeletePartyMemberResponseDto> deletePartyMember(String userEmail, Integer partyId);
     ResponseEntity<? super PatchMemberRoleResponseDto> patchMemberRole(PatchMemberRoleRequestDto dto, String email);
-    ResponseEntity<? super GetPartyMembersResponseDto> getPartyMembers(String userEmail, String email, Integer partyId);
+    ResponseEntity<? super GetPartyMembersResponseDto> getPartyMembers(String userEmail, Integer partyId);
 }

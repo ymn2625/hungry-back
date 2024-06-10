@@ -18,8 +18,8 @@ public class DeletePartyMemberResponseDto extends ResponseDto {
         return ResponseEntity.status(HttpStatus.OK).body(responseBody);
     }
 
-    public static ResponseEntity<ResponseDto> noExistPartyMember() {
-        ResponseDto responseBody = new ResponseDto(ResponseCode.NOT_EXIST_PARTY_MEMBER, ResponseMessage.NOT_EXIST_PARTY_MEMBER);
+    public static ResponseEntity<ResponseDto> noExistParty() {
+        ResponseDto responseBody = new ResponseDto(ResponseCode.NOT_EXIST_PARTY, ResponseMessage.NOT_EXIST_PARTY);
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseBody);
     }
 

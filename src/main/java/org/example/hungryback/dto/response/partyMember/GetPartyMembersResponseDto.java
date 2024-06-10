@@ -5,7 +5,7 @@ import org.example.hungryback.common.ResponseCode;
 import org.example.hungryback.common.ResponseMessage;
 import org.example.hungryback.dto.ResponseDto;
 import org.example.hungryback.dto.object.PartyMemberListItem;
-import org.example.hungryback.repository.resultSet.GetPartyMemberListResultSet;
+import org.example.hungryback.repository.resultSet.GetPartyMemberResultSet;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
@@ -16,13 +16,16 @@ import static org.example.hungryback.dto.object.PartyMemberListItem.copyList;
 @Getter
 public class GetPartyMembersResponseDto extends ResponseDto {
     List<PartyMemberListItem> partyMemberList;
-    private GetPartyMembersResponseDto(List<GetPartyMemberListResultSet> resultSets) {
+    PartyMemberListItem userProfile;
+
+    private GetPartyMembersResponseDto(List<GetPartyMemberResultSet> resultSets, GetPartyMemberResultSet userProfile) {
         super();
-        partyMemberList = copyList(resultSets);
+        this.partyMemberList = copyList(resultSets);
+        this.userProfile = new PartyMemberListItem(userProfile);
     }
 
-    public static ResponseEntity<GetPartyMembersResponseDto> success(List<GetPartyMemberListResultSet> resultSets) {
-        GetPartyMembersResponseDto responseBody = new GetPartyMembersResponseDto(resultSets);
+    public static ResponseEntity<GetPartyMembersResponseDto> success(List<GetPartyMemberResultSet> resultSets, GetPartyMemberResultSet userProfile) {
+        GetPartyMembersResponseDto responseBody = new GetPartyMembersResponseDto(resultSets, userProfile);
         return ResponseEntity.status(HttpStatus.OK).body(responseBody);
     }
 

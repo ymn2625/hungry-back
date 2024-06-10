@@ -6,6 +6,7 @@ import org.example.hungryback.common.ResponseMessage;
 import org.example.hungryback.dto.ResponseDto;
 import org.example.hungryback.dto.object.MessageListItem;
 import org.example.hungryback.entity.MessageEntity;
+import org.example.hungryback.repository.resultSet.GetMessageResultSet;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
@@ -15,12 +16,12 @@ import java.util.List;
 public class GetMessagesResponseDto extends ResponseDto {
     private List<MessageListItem> messageList;
 
-    private GetMessagesResponseDto (List<MessageEntity> resultSets) {
+    private GetMessagesResponseDto (List<GetMessageResultSet> resultSets) {
         super();
         this.messageList = MessageListItem.copyList(resultSets);
     }
 
-    public static ResponseEntity<GetMessagesResponseDto> success(List<MessageEntity> resultSets) {
+    public static ResponseEntity<GetMessagesResponseDto> success(List<GetMessageResultSet> resultSets) {
         GetMessagesResponseDto responseBody = new GetMessagesResponseDto(resultSets);
         return ResponseEntity.status(HttpStatus.OK).body(responseBody);
     }
