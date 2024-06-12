@@ -5,11 +5,13 @@ import org.example.hungryback.dto.ResponseDto;
 import org.example.hungryback.dto.request.party.PostPartyRequestDto;
 import org.example.hungryback.dto.response.party.GetPartiesByUserEmailResponseDto;
 import org.example.hungryback.dto.response.party.GetPartiesResponseDto;
+import org.example.hungryback.dto.response.party.GetPartyResponseDto;
 import org.example.hungryback.dto.response.party.PostPartyResponseDto;
 import org.example.hungryback.entity.PartyEntity;
 import org.example.hungryback.entity.PartyMemberEntity;
 import org.example.hungryback.repository.*;
 import org.example.hungryback.repository.resultSet.GetPartyByUserEmailResultSet;
+import org.example.hungryback.repository.resultSet.GetPartyResultSet;
 import org.example.hungryback.service.PartyService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -83,6 +85,19 @@ public class PartyServiceImplement implements PartyService {
             return ResponseDto.databaseError();
         }
         return GetPartiesByUserEmailResponseDto.success(resultSets);
+    }
+
+    @Override
+    public ResponseEntity<? super GetPartyResponseDto> getParty(Integer partyId) {
+        GetPartyResultSet resultSet = null;
+        try {
+            resultSet = partyRepository.findPartyInfoByPartyId(partyId);
+            if(resultSet == null) return GetPartyResponseDto.noExistStore();
+        } catch (Exception e) {
+            e.printStackTrace();
+            ResponseDto.databaseError();
+        }
+        return GetPartyResponseDto.success(resultSet);
     }
 
 }
