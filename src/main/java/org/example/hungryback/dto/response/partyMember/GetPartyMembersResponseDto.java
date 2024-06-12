@@ -15,19 +15,24 @@ import static org.example.hungryback.dto.object.PartyMemberListItem.copyList;
 
 @Getter
 public class GetPartyMembersResponseDto extends ResponseDto {
-    List<PartyMemberListItem> partyMemberList;
+    List<PartyMemberListItem> partyMemberListFromServer;
     PartyMemberListItem userProfile;
 
+    private GetPartyMembersResponseDto(List<GetPartyMemberResultSet> resultSets) {
+        super();
+        this.partyMemberListFromServer = copyList(resultSets);
+    }
+  /*
     private GetPartyMembersResponseDto(List<GetPartyMemberResultSet> resultSets, GetPartyMemberResultSet userProfile) {
         super();
-        this.partyMemberList = copyList(resultSets);
+        this.partyMemberListFromServer = copyList(resultSets);
         this.userProfile = new PartyMemberListItem(userProfile);
     }
 
     public static ResponseEntity<GetPartyMembersResponseDto> success(List<GetPartyMemberResultSet> resultSets, GetPartyMemberResultSet userProfile) {
         GetPartyMembersResponseDto responseBody = new GetPartyMembersResponseDto(resultSets, userProfile);
         return ResponseEntity.status(HttpStatus.OK).body(responseBody);
-    }
+    }*/
 
     public static ResponseEntity<ResponseDto> noExistParty() {
         ResponseDto responseBody = new ResponseDto(ResponseCode.NOT_EXIST_PARTY, ResponseMessage.NOT_EXIST_PARTY);
@@ -38,4 +43,10 @@ public class GetPartyMembersResponseDto extends ResponseDto {
         ResponseDto responseBody = new ResponseDto(ResponseCode.NO_PERMISSION, ResponseMessage.NO_PERMISSION);
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(responseBody);
     }
+
+    public static ResponseEntity<GetPartyMembersResponseDto> success(List<GetPartyMemberResultSet> resultSets) {
+        GetPartyMembersResponseDto responseBody = new GetPartyMembersResponseDto(resultSets);
+        return ResponseEntity.status(HttpStatus.OK).body(responseBody);
+    }
+
 }

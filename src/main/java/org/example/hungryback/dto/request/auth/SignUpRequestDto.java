@@ -35,4 +35,6 @@ public class SignUpRequestDto {
     @NotBlank
     private String userType;
 
+    private float userAttractive;
+
 }

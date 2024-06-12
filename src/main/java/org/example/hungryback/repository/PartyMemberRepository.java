@@ -14,15 +14,30 @@ import java.util.List;
 public interface PartyMemberRepository extends JpaRepository<PartyMemberEntity, PartyMemberPk> {
     PartyMemberEntity findByUserEmailAndPartyId(String userEmail, Integer partyId);
     PartyMemberEntity findByPartyIdAndMemberRole(Integer partyId, Integer memberRole);
+  /*
     @Query(
             value = "SELECT u.user_email userEmail, u.user_nickname userNickname, u.user_profile_img userProfileImg, pm.member_role memberRole FROM user u join party_member pm using(user_email) where pm.party_id = :partyId order by member_role desc",
             nativeQuery = true
     )
-    List<GetPartyMemberResultSet> findPartyMembersByPartyId(@Param("partyId") Integer partyId);
+   List<GetPartyMemberResultSet> findPartyMembersByPartyId(@Param("partyId") Integer partyId);
+  */
+    /*
     @Query(
             value = "SELECT u.user_email userEmail, u.user_nickname userNickname, u.user_profile_img userProfileImg, pm.member_role memberRole FROM user u join party_member pm using(user_email) where pm.party_id = :partyId and pm.user_email = :userEmail",
             nativeQuery = true
     )
     GetPartyMemberResultSet findPartyMemberByPartyIdAndUserEmail(@Param("partyId") Integer partyId, @Param("userEmail") String userEmail);
+*/
+
+    //진영만듦
+    @Query(
+            value = "SELECT u.user_email userEmail, u.user_name userName, u.user_nickname userNickname, u.user_profile_img userProfileImg, u.user_attractive userAttractive, pm.member_role memberRole FROM user u join party_member pm using(user_email) where pm.party_id = :partyId",
+            nativeQuery = true
+    )
+    List<GetPartyMemberResultSet> findPartyMemberByPartyId(@Param("partyId") Integer partyId);
+
+
+
+
     boolean existsByUserEmailAndPartyId(String userEmail, Integer partyId);
 }

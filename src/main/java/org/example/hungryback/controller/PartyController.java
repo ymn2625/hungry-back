@@ -37,7 +37,6 @@ public class PartyController {
     @GetMapping("/stores/{storeId}/parties")
     public ResponseEntity<? super GetPartiesResponseDto> getPartiesByStoreId(@PathVariable("storeId") Integer storeId) {
         ResponseEntity<? super GetPartiesResponseDto> response = partyService.getParties(storeId);
-
         return response;
     }
 
@@ -54,18 +53,20 @@ public class PartyController {
     }
 
     @GetMapping("/parties/{partyId}/party-member")
-    public ResponseEntity<? super GetPartyMembersResponseDto> getPartyMembers(@AuthenticationPrincipal String userEmail, @PathVariable Integer partyId) {
-        ResponseEntity<? super GetPartyMembersResponseDto> response = partyMemberService.getPartyMembers(userEmail, partyId);
+    public ResponseEntity<? super GetPartyMembersResponseDto> getPartyMembers(@PathVariable Integer partyId) {
+        System.out.println("111111111111");
+        ResponseEntity<? super GetPartyMembersResponseDto> response = partyMemberService.getPartyMembers(partyId);
+
         return response;
     }
 
-    @PostMapping("/parties/{partyId}")
+    @PostMapping("/parties/{partyId}/party-member")
     public ResponseEntity<? super PostPartyMemberResponseDto> postPartyMember(@RequestBody @Valid PostPartyMemberRequestDto requestBody) {
         ResponseEntity<? super PostPartyMemberResponseDto> response = partyMemberService.postPartyMember(requestBody);
         return response;
     }
 
-    @DeleteMapping("/parties/{partyId}")
+    @DeleteMapping("/parties/{partyId}/party-member")
     public ResponseEntity<? super DeletePartyMemberResponseDto> deletePartyMember(@AuthenticationPrincipal String userEmail, @PathVariable Integer partyId) {
         ResponseEntity<? super DeletePartyMemberResponseDto> response = partyMemberService.deletePartyMember(userEmail, partyId);
         return response;
