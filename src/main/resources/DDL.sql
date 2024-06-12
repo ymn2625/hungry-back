@@ -119,4 +119,3 @@ WHERE pm.user_email = 'leeym26154@naver.com';
 
 
 select * from message order by party_id, send_time desc;
-

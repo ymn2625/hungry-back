@@ -51,13 +51,11 @@ public class StompHandler implements ChannelInterceptor {
             }
 
             String partyIdString = partyIdHeaders.get(0).replace("[", "").replace("]", "");
-            System.out.println("partyIdString: " + partyIdString);
 
             String userEmail = jwtProvider.getUserEmail(token);
             int partyId = Integer.parseInt(partyIdString);
 
             PartyMemberEntity partyMemberEntity = partyMemberRepository.findByUserEmailAndPartyId(userEmail, partyId);
-            System.out.println("partyMemberEntity: " + partyMemberEntity);
             if (partyMemberEntity == null) {
                 throw new AccessDeniedException("User is not a member of the specified party");
             }
