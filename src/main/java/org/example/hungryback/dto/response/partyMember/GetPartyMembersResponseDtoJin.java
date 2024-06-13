@@ -14,14 +14,12 @@ import java.util.List;
 import static org.example.hungryback.dto.object.PartyMemberListItem.copyList;
 
 @Getter
-public class GetPartyMembersResponseDto extends ResponseDto {
+public class GetPartyMembersResponseDtoJin extends ResponseDto {
     List<PartyMemberListItem> partyMemberListFromServer;
-    PartyMemberListItem userProfile;
 
-    private GetPartyMembersResponseDto(List<GetPartyMemberResultSet> resultSets, GetPartyMemberResultSet userProfile) {
+    private GetPartyMembersResponseDtoJin(List<GetPartyMemberResultSet> resultSets) {
         super();
         this.partyMemberListFromServer = copyList(resultSets);
-        this.userProfile = new PartyMemberListItem(userProfile);
     }
 
     public static ResponseEntity<ResponseDto> noExistParty() {
@@ -34,8 +32,8 @@ public class GetPartyMembersResponseDto extends ResponseDto {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(responseBody);
     }
 
-    public static ResponseEntity<GetPartyMembersResponseDto> success(List<GetPartyMemberResultSet> resultSets, GetPartyMemberResultSet userProfile) {
-        GetPartyMembersResponseDto responseBody = new GetPartyMembersResponseDto(resultSets, userProfile);
+    public static ResponseEntity<GetPartyMembersResponseDtoJin> success(List<GetPartyMemberResultSet> resultSets) {
+        GetPartyMembersResponseDtoJin responseBody = new GetPartyMembersResponseDtoJin(resultSets);
         return ResponseEntity.status(HttpStatus.OK).body(responseBody);
     }
 

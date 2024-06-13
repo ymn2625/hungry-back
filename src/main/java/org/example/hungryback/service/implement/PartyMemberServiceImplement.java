@@ -95,7 +95,7 @@ public class PartyMemberServiceImplement implements PartyMemberService {
         return PatchMemberRoleResponseDto.success();
     }
 
-/*    @Override
+ @Override
     public ResponseEntity<? super GetPartyMembersResponseDto> getPartyMembers(String userEmail, Integer partyId) {
         List<GetPartyMemberResultSet> resultSets = new ArrayList<>();
         GetPartyMemberResultSet userProfile;
@@ -113,24 +113,8 @@ public class PartyMemberServiceImplement implements PartyMemberService {
             return ResponseDto.databaseError();
         }
         return GetPartyMembersResponseDto.success(resultSets, userProfile);
-    }*/
-
-    //진영만듦
-    @Override
-    public ResponseEntity<? super GetPartyMembersResponseDto> getPartyMembers(Integer partyId) {
-        List<GetPartyMemberResultSet> resultSets = new ArrayList<>();
-        GetPartyMemberResultSet userProfile;
-        try {
-            boolean isExistParty = partyRepository.existsByPartyId(partyId);
-            if(!isExistParty) return GetPartyMembersResponseDto.noExistParty();
-
-            resultSets = partyMemberRepository.findPartyMemberByPartyId(partyId);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return ResponseDto.databaseError();
-        }
-        return GetPartyMembersResponseDto.success(resultSets);
     }
+
 
 
 }

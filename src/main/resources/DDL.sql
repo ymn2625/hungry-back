@@ -119,3 +119,33 @@ WHERE pm.user_email = 'leeym26154@naver.com';
 
 
 select * from message order by party_id, send_time desc;
+
+
+
+
+
+SELECT
+    p.party_limit AS partyLimit,
+    p.store_id AS storeId,
+    p.party_count AS partyCount,
+    p.party_id AS partyId,
+    p.party_description AS partyDescription,
+    p.party_end_time AS partyEndTime,
+    p.party_img AS partyImg,
+    p.party_name AS partyName,
+    p.party_start_time AS partyStartTime,
+    p.party_time AS partyTime,
+    m.content
+FROM
+    party AS p
+        LEFT JOIN
+    (SELECT party_id, MAX(send_time) AS max_send_time FROM message GROUP BY party_id) AS latest_messages ON p.party_id = latest_messages.party_id
+        LEFT JOIN
+    message AS m ON latest_messages.party_id = m.party_id AND latest_messages.max_send_time = m.send_time
+        JOIN
+    party_member AS pm ON pm.party_id = p.party_id
+WHERE
+    pm.user_email = "dsr_shine@naver.com"
+ORDER BY
+    m.send_time DESC
+

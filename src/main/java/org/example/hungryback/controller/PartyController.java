@@ -58,12 +58,10 @@ public class PartyController {
         ResponseEntity<? super GetPartyResponseDto> response = partyService.getParty(partyId);
         return response;
     }
-
+//복구
     @GetMapping("/parties/{partyId}/party-member")
-    public ResponseEntity<? super GetPartyMembersResponseDto> getPartyMembers(@PathVariable Integer partyId) {
-        System.out.println("111111111111");
-        ResponseEntity<? super GetPartyMembersResponseDto> response = partyMemberService.getPartyMembers(partyId);
-
+    public ResponseEntity<? super GetPartyMembersResponseDto> getPartyMembers(@AuthenticationPrincipal String userEmail, @PathVariable Integer partyId) {
+        ResponseEntity<? super GetPartyMembersResponseDto> response = partyMemberService.getPartyMembers(userEmail, partyId);
         return response;
     }
 
