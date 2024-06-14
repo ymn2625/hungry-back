@@ -95,7 +95,7 @@ public class PartyMemberServiceImplement implements PartyMemberService {
         return PatchMemberRoleResponseDto.success();
     }
 
-    @Override
+ @Override
     public ResponseEntity<? super GetPartyMembersResponseDto> getPartyMembers(String userEmail, Integer partyId) {
         List<GetPartyMemberResultSet> resultSets = new ArrayList<>();
         GetPartyMemberResultSet userProfile;
@@ -114,6 +114,7 @@ public class PartyMemberServiceImplement implements PartyMemberService {
         }
         return GetPartyMembersResponseDto.success(resultSets, userProfile);
     }
+
 
 
 }

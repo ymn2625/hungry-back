@@ -98,14 +98,6 @@ INSERT INTO message (
       ('example6@gmail.com', 7, '저두요~', '2024-06-11 08:16:00'),
       ('leeym26154@naver.com', 7, '맛있겠네요.', '2024-06-11 08:18:00');
 
-INSERT INTO message (
-    user_email,
-    party_id,
-    content,
-    send_time
-) VALUES
-    ('leeym26154@naver.com', 5, '한 번 더 보내보는 메시지~', '2024-06-12 08:19:00');
-
 
 SELECT p.*, m.content FROM (SELECT party_id, MAX(send_time) AS max_send_time FROM message GROUP BY party_id) AS latest_messages JOIN message AS m ON latest_messages.party_id = m.party_id AND latest_messages.max_send_time = m.send_time JOIN party AS p ON m.party_id = p.party_id JOIN party_member AS pm ON pm.party_id = p.party_id WHERE pm.user_email = 'leeym26154@naver.com';
 SELECT
@@ -123,24 +115,37 @@ SELECT
 FROM (SELECT party_id, MAX(send_time) AS max_send_time FROM message GROUP BY party_id) AS latest_messages
 JOIN message AS m ON latest_messages.party_id = m.party_id AND latest_messages.max_send_time = m.send_time
 JOIN party AS p ON m.party_id = p.party_id JOIN party_member AS pm ON pm.party_id = p.party_id
-WHERE pm.user_email = 'leeym26154@naver.com'
-ORDER BY m.send_time desc;
+WHERE pm.user_email = 'leeym26154@naver.com';
+
+
+select * from message order by party_id, send_time desc;
+
+
 
 
 
 SELECT
-p.party_limit partyLimit,
-p.store_id storeId,
-p.party_count partyCount,
-p.party_id partyId,
-p.party_description partyDescription,
-p.party_end_time partyEndTime,
-p.party_img partyImg,
-p.party_name partyName,
-p.party_start_time partyStartTime,
-p.party_time partyTime,
-s.store_name storeName
-FROM party p
-JOIN store s
-ON s.store_id = p.store_id
-WHERE p.party_id = 5;
+    p.party_limit AS partyLimit,
+    p.store_id AS storeId,
+    p.party_count AS partyCount,
+    p.party_id AS partyId,
+    p.party_description AS partyDescription,
+    p.party_end_time AS partyEndTime,
+    p.party_img AS partyImg,
+    p.party_name AS partyName,
+    p.party_start_time AS partyStartTime,
+    p.party_time AS partyTime,
+    m.content
+FROM
+    party AS p
+        LEFT JOIN
+    (SELECT party_id, MAX(send_time) AS max_send_time FROM message GROUP BY party_id) AS latest_messages ON p.party_id = latest_messages.party_id
+        LEFT JOIN
+    message AS m ON latest_messages.party_id = m.party_id AND latest_messages.max_send_time = m.send_time
+        JOIN
+    party_member AS pm ON pm.party_id = p.party_id
+WHERE
+    pm.user_email = "dsr_shine@naver.com"
+ORDER BY
+    m.send_time DESC
+

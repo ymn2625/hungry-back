@@ -19,6 +19,7 @@ public class UserEntity {
     private String userProfileImg;
     private String userNickname;
     private String userRole;
+    private float userAttractive;
 
     @Builder
     public UserEntity(SignUpRequestDto dto) {
@@ -30,6 +31,7 @@ public class UserEntity {
         this.userProfileImg = dto.getUserProfileImg();
         this.userNickname = dto.getUserNickname();
         this.userRole = "ROLE_USER";
+        this.userAttractive = dto.getUserAttractive();
     }
 
     public void patchPassword(String encodedPassword) {

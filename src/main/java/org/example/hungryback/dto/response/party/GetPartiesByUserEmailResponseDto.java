@@ -14,13 +14,15 @@ import org.springframework.http.ResponseEntity;
 import java.util.List;
 
 @Getter
-public class GetPartiesByUserEmailResponseDto extends ResponseDto {
+public class
+GetPartiesByUserEmailResponseDto extends ResponseDto {
 
     private List<PartyByUserEmailListItem> partyListItem;
 
     private GetPartiesByUserEmailResponseDto(List<GetPartyByUserEmailResultSet> resultSets) {
         super();
         this.partyListItem = PartyByUserEmailListItem.copyList(resultSets);
+        System.out.println(partyListItem.size()+"몇");
     }
 
     public static ResponseEntity<GetPartiesByUserEmailResponseDto> success(List<GetPartyByUserEmailResultSet> resultSets) {

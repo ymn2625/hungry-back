@@ -5,4 +5,6 @@ public interface GetPartyMemberResultSet {
     String getUserNickname();
     String getUserProfileImg();
     Integer getMemberRole();
+    String getUserName();
+    float getUserAttractive();
 }

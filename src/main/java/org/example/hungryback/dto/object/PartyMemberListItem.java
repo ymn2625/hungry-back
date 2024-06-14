@@ -13,14 +13,18 @@ import java.util.List;
 @AllArgsConstructor
 public class PartyMemberListItem {
     private String userEmail;
+    private String userName;
     private String userNickname;
     private String userProfileImg;
+    private float userAttractive;
     private Integer memberRole;
 
     public PartyMemberListItem (GetPartyMemberResultSet resultSet) {
         this.userEmail = resultSet.getUserEmail();
+        this.userName = resultSet.getUserName();
         this.userNickname = resultSet.getUserNickname();
         this.userProfileImg = resultSet.getUserProfileImg();
+        this.userAttractive = resultSet.getUserAttractive();
         this.memberRole = resultSet.getMemberRole();
     }
 
